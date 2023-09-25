@@ -1,0 +1,1080 @@
+<html>
+
+<head>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/9785/9785466.png">
+    <title>Panorama 360</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <style>
+        body {
+            background: white;
+            font-size: 18px;
+        }
+        input {
+            width: 100px;
+            margin: 10px;
+            font-size: 18px;
+            background: #77ee77;
+        }
+        select {
+            margin: 10px;
+            font-size: 18px;
+            background: #77ee77;
+        }
+        button {
+            margin: 10px;
+            font-size: 16px;
+        }
+        #todoTk {
+            width: 100%;
+            display: none;
+        }
+        #elocal {
+            width: 95%;
+            height: 50%;
+            position: absolute;
+            right: 2%;
+            bottom: 1%;
+        }
+        #dintdata {
+            border-style: double;
+        }
+        #dadjob {
+            // position: absolute;
+            // top: 5%;
+            border-style: double;
+        }
+        #dcrearj {
+            position: absolute;
+            top: 10%;
+            border-style: double;
+            position: absolute;
+            bottom: 2%;
+            left: 5%;
+            width: 90%;
+            height: 75%;
+            background: rgba(255, 255, 255, 1);
+            display: none;
+        }
+        #djobs {
+            color: white;
+            width: 100%;
+            height: 60%;
+            overflow: auto;
+            background-color: orange;
+        }
+        .cj {
+            color: black;
+            border-style: solid;
+            width: 96%;
+            border-radius: 10px;
+            background-color: honeydew;
+            font-size: 14px;
+            margin: 6px;
+        }
+        .cbj {
+            color: white;
+            border-radius: 100px;
+            background-color: red;
+        }
+        #dsctrocas {
+            border-style: solid;
+            background-color: red;
+            width: 100%;
+            height: 300px;
+        }
+        #tasel {
+            width: 100%;
+            height: 8%;
+            font-size: 4px;
+        }
+        #jdescription{
+                    width: 100%;
+            height: 8%;
+         //   font-size: 4px;  
+        }
+     #temp{
+         background-color: cornsilk;
+        position: absolute;
+        width: 60%;;
+        height: 20%;
+        top:30%;
+        left: 20%;
+        display: none;
+        padding: 10px;
+        border-style:double;
+        border-radius:8px;
+        font-weight:bold;
+        
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+       opacity:.85;
+    }      
+        
+    </style>
+    <div id="todo">
+        <div id="ctrls">
+            <select id="sctrls" oninput="dosctrls(this.value)">\
+                <option>Choose an Option</Option>
+                </option>
+                <option>Show Trucks Dlg</option>
+                <option>Show Job Dlg</option>
+
+                <option>Show Tasks in editor</option>
+                <option></option>
+                <option>Reinitiate App</option>              <option></option>
+                <option>Send Backup to Web</option>
+                <option>Recover Backup from Web</option>
+            </select>
+            <select id="skey" oninput="selKey(this.value)">
+            <option>Sel Key</option>
+            <option>Tasks</option> 
+            <option>Tasks2</option>
+            <option></option>
+            </select>
+        </div>
+        <div id="dadjob">
+            <button onclick="dadjob.style.display='none';ctrls.style.display='block';">Close</button>
+            <button onclick="createJob2(strocas)">Create Job</button>
+        </div>
+        <div id="todoTk">
+            <div id="dintdata">
+                No.
+                <input id="ino" type="number"></input>
+
+                <select id="scid" oninput="" value="A" class="">
+
+                    <option>A</option>
+                    <option>D</option>
+                    <option>T</option>
+                    <option>Tr</option>
+                    <option>Fork</option>
+                    <option>Misc</option>
+
+
+                </select>
+                <select id="stype" oninput="" class="">
+                    <option>Type?</option>
+                    <option>FL</option>
+                    <option>SL</option>
+                    <option>RL</option>
+                    <option>RO</option>
+                    <option>FB</option>
+
+                </select>
+                <select id="snew" oninput="" value="New" class="">
+
+                    <option>New</option>
+                    <option>Media</option>
+                    <option>Old</option>
+                </select>
+                Off?
+                <select id="sactive" value=1 oninput="" class="">
+
+                    <option>1</option>
+                    <option>0</option>
+
+                </select>
+                <select id="sbrand" oninput="" value="Hiel" class="">
+
+                    <option>Heil</option>
+                    <option>Lebrie</option>
+                    <option>McNillas></option>
+
+                </select>
+
+                <br>
+
+                <input id="ifrecuency" type="number"></input>Frecuency Use 1/10
+                <input id="iarrive" type="number"></input>Arrive Use 1/10
+                <br>...
+                <button onclick="clr()" style="background:orange;">Clr</button>...
+                <button onclick="deletetk()" style="background:orange;">Del</button>...
+                <button onclick="addTk()">Add/Update</button>
+
+
+
+                <button onclick="saveLocal()">Save Local</button>
+                <button onclick="reseteLocal()" style="background:orange;">Reset Local</button>
+                <button onclick="todoTk.style.display='none';ctrls.style.display='block'">Close</button>
+                <div id="dstrocas">
+
+
+                    <select id="strocas" oninput="selTroca(this.value);//selectTk(this)" onfocus="select=this;">
+                        <option>Choose a Truck</option>
+                    </select>  <button onclick="jobn.value=strocas.value;isearch.value=jobn.value;isearch.oninput();//selForAdd();">Sel</button>Name: 
+                    <textarea id="tasel"></textarea>
+                    <span id="ti" style="color:red;font-size:8px;padding:2px;margin-left: 30px;border-style: solid;border-color: rgb(9, 84, 204);"></span>
+ 
+                    
+ 
+                    
+                    
+                    
+                    
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+        <div id="show">
+
+            <textarea id="elocal"></textarea>
+        </div>
+        </todo>
+        <div id="dcrearj">
+          Job:
+            <input id="jobn" value=''> 
+             SEARCH:<input id="isearch" style="background:#ffcccc" oninput="search(this.value);">
+                    </input><br>From:
+            <input id="from" type="number">To:
+            <input id="to" type="number">Date:
+            <input id="fecha" type="date">Description:
+            <button id="mic" onclick="inicRec(jdescription)">&#127908;</button>
+            <textarea id="jdescription" value=""></textarea>
+  
+            <button onclick="dcrearj.style.display='none'">Close</button>
+             
+                    <button onclick="updatej(ti.ejob)">Update</button>
+                    <button onclick="deletej(ti.ejob)">Delete</button> 
+                    <button onclick="crearJob();//createJob()" style="background:#aaffaa;">Add</button>   
+            <div id="djobs"></div>
+
+        </div>
+        
+      <textarea id="temp" value=""></textarea>  
+      <script>
+      var key="Tasks2";skey.value=key;
+             GetJ=function(url, callback) {
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', url + '/1', true)
+            xhr.onload = function() {
+                var users = JSON.parse(xhr.responseText);
+                if (xhr.readyState == 4 && xhr.status == "200") {
+                    callback(users);
+                } else {
+                    console.error(users);
+                }
+            }
+            xhr.send(null);
+        }
+
+         UpdateJ= function(url, ob, callback) {
+            var json = JSON.stringify(ob);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("PUT", url + '/12', true);
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xhr.onload = function() {
+                var users = JSON.parse(xhr.responseText);
+                if (xhr.readyState == 4 && xhr.status == "200") {
+                    if (callback != undefined) callback(users);
+                } else {
+                    (users);
+                }
+            }
+            xhr.send(json);
+        } 
+      
+      </script>
+        <script> 
+        var link='https://jsonblob.com/api/1155945790782169088'
+            var speechRecognizer;
+    if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+        speechRecognizer = new webkitSpeechRecognition();
+        speechRecognizer.continuous = false;
+        speechRecognizer.interimResults = true;
+        speechRecognizer.lang = "es-MX | en-US";
+        speechRecognizer.maxAlternatives = 1;
+    } else {
+        alert("your browser does not support speech recognition")
+    }
+
+    var active = false;
+              ActualTrk = {}
+            dcrearj.style.display = "none"
+            todoTk.style.display = "none";
+            dadjob.style.display = 'none';
+            obTasks2 = {};
+            obTasks2.projects = [];
+            obTasks2.jobs = []
+            var trocas = [], projects=[], troca="", project="", select="",jobs=[];
+           
+ // localStorage.removeItem("Tasks2");
+ /* 
+var h='{"trocas":[{"No":"26","cid":"A","type":"SL","nuevo":"Media","arrive":"2","active":"1","frecuency":"8","brand":"Heil"},{"No":"25","cid":"A","type":"SL","nuevo":"Media","arrive":"2","active":"1","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-08-15","created":"Sat Aug 26 2023 08:22","form":"12.5","to":"16.5","description":"Repair cylinders"}]},{"No":"201","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"229","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"202","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"created":"Wed Aug 23 2023 14","form":"12","to":"23","description":"Fixing hoses"},{"created":"Wed Aug 23 2023 14","form":"12","to":"23","description":"Fixing hoses"},{"date":"2023-08-21","created":"Mon Aug 28 2023 16:10","form":"12","description":"reparing hoses","to":"14.5"}]},{"No":"24","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"created":"Mon Aug 28 2023 16:17","form":"12","to":"16.5","description":"Repair leak","date":"2023-08-19"},{"created":"Fri Aug 25 2023 23:11","form":"6","to":"9","description":"Repair gggg","date":"2023-08-25"},{"date":"2023-08-25","created":"Fri Aug 25 2023 12:54","form":"16.5","to":"17","description":"Repair leak"}]},{"No":"203","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-07-27","created":"Sat Aug 26 2023 07:35","form":"10","to":"12","description":"Repair seal"},{"date":"2023-07-27","created":"Sat Aug 26 2023 07:36","form":"12.5","to":"16.5","description":"Shop"}]},{"No":"200","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"400","cid":"A","type":"RL","nuevo":"New","arrive":"12","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-22","created":"Sat Aug 26 2023 11:48","form":"12","description":"fix leak and greasing"}]},{"No":"27","cid":"A","type":"SL","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Lebrie"},{"No":"3","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-16","created":"Sat Aug 26 2023 08:29","form":"6","to":"12","description":"Repair cylinders and cracks"}]},{"No":"8","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"1","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-08-18","created":"Sat Aug 26 2023 08:57","form":"12.5","to":"16.5","description":"Repairblade"}]},{"No":"19","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"0","frecuency":"8","brand":"Heil"},{"No":"8","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"0","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-07-28","created":"Sat Aug 26 2023 07:39","form":"12.5","to":"16.5","description":"Reparing srn leaks"}]},{"No":"2","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"0","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-22","created":"Sat Aug 26 2023 10:22","form":"6","description":"Reparing some leaks and tail gate seal"}]},{"No":"104","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-19","created":"Sat Aug 26 2023 08:56","form":"12.5","to":"13.5","description":"Repair light "}]},{"No":"13","cid":"A","type":"FB","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Heil"},{"No":"1","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"0","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-17","created":"Sat Aug 26 2023 08:54","form":"12.5","to":"16.5","description":"Fixing leaks "}]},{"No":"101","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"0","frecuency":"9","brand":"Heil"},{"No":"9","cid":"A","type":"SL","nuevo":"Old","arrive":"3","active":"0","frecuency":"7","brand":"Heil","jobs":[{"date":"2023-08-04","created":"Sat Aug 26 2023 08:08","form":"12.5","to":"16.5","description":"Welding cracks "}]},{"No":"10","cid":"A","type":"RL","nuevo":"Old","arrive":"12","active":"0","frecuency":"5","brand":"Heil"},{"No":"102","cid":"A","type":"SL","nuevo":"New","arrive":"2","active":"1","frecuency":"9","brand":"Heil"},{"No":"301","cid":"A","type":"RO","nuevo":"New","arrive":"2","active":"1","frecuency":"9","brand":"Heil"},{"No":"103","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"0","frecuency":"9","brand":"Heil"},{"No":"13","cid":"A","type":"FB","nuevo":"Old","arrive":"12","active":"0","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-15","created":"Sat Aug 26 2023 08:22","form":"6","to":"11","description":"Repair gate"}]},{"No":"20","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"8","brand":"Heil"},{"No":"100","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"1","frecuency":"9","brand":"Heil"},{"No":"17","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"7","brand":"Heil","jobs":[{"date":"2023-08-21","created":"Sat Aug 26 2023 08:58","form":"12.5","to":"16.5","description":"Repair side doors"}]},{"No":"28","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"1","frecuency":"6","brand":"Lebrie","jobs":[{"date":"2023-08-04","created":"Sat Aug 26 2023 08:09","form":"12.5","to":"16.5","description":"Welding cracks "}]},{"No":"16","cid":"A","type":"RO","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Lebrie","jobs":[{"date":"2023-07-31","created":"Sat Aug 26 2023 07:43","form":"14.5","to":"16.5","description":"Reparing tarp"}]},{"No":"300","cid":"A","type":"RO","nuevo":"New","arrive":"12","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-01","created":"Sat Aug 26 2023 07:48","form":"15.5","to":"16.5","description":"Reparing broken pin"}]},{"No":"69","cid":"D","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"2","brand":"Heil","jobs":[{"date":"2023-08-05","created":"Sat Aug 26 2023 08:11","form":"12.5","to":"15","description":"Reparing broken hoses"}]},{"No":"1","cid":"A","type":"RO","nuevo":"Old","arrive":"12","active":"1","frecuency":"8","brand":"Heil"},{"No":"6","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"1","frecuency":"6","brand":"Heil"},{"No":"5","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"8","brand":"Heil"}],"projects":[]}';
+localStorage.setItem("Tasks2",h);
+obTasks2=JSON.parse(h);
+obTasks2.jobs=[];
+jobs=obTasks2.jobs;
+alert(JSON.stringify(obTasks2));
+localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
+
+ */
+
+             setUpSels();
+
+            function setUpselT() {
+                strocas.innerHTML = "<option>Choose a Truck</option>";
+                var o = "";
+                for (var i = 0; i < trocas.length; i++) {
+                    o += "<option >" + trocas[i].No + "</option>";
+                }
+
+            }
+
+            function validateTk(n) {
+                for (var i = 0; i < trocas.length; i++) {
+                    if (trocas[i].No === n) return i;
+                }
+                return -1
+            }
+
+            function addTk() {
+                if (stype.value.indexOf("?") > 1 || ifrecuency.value.length < 1 || ino.value.length < 1) {
+                    alert("inf. incomplete, check");
+                    return;
+                }
+                var index = validateTk(ino.value)
+                if (index > -1) {
+                    alert("Truck " + ino.value + " Exist");
+                    if (confirm("Do you want to replace it?")) {
+
+
+                        var tk = {};
+                        tk.No = ino.value;
+                        tk.cid = scid.value;
+                        tk.type = stype.value;
+                        tk.nuevo = snew.value;
+                        tk.arrive = iarrive.value;
+                        tk.active = sactive.value;
+                        tk.frecuency = ifrecuency.value;
+                        tk.brand = sbrand.value;
+                        trocas[index] = tk; //  obTasks2.trks.push(tk);
+
+                        var s = JSON.stringify(obTasks2)
+                        var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
+                        elocal.value = ss;
+                        setUpselT()
+                        if (confirm("Do you want to Save it?")) saveLocal();
+                        alert("Your Truck has been replaced");
+
+                    } else return;
+
+                } else {
+                    var tk = {};
+                    tk.No = ino.value;
+                    tk.cid = scid.value;
+                    tk.type = stype.value;
+                    tk.nuevo = snew.value;
+                    tk.arrive = iarrive.value;
+                    tk.active = sactive.value;
+                    tk.frecuency = ifrecuency.value;
+                    tk.brand = sbrand.value;
+                    trocas.push(tk)
+                    //  obTasks2.trks.push(tk);
+
+                    var s = JSON.stringify(obTasks2)
+                    var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
+                    elocal.value = ss;
+                    setUpselT()
+                    if (confirm("Do you want to Save it?")) saveLocal();
+                }
+                //  clr()
+
+            }
+
+            function saveLocal() {
+
+                var s = JSON.stringify(obTasks2)
+                localStorage.setItem("Tasks2", s);
+                var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                elocal.value = s;
+
+
+            }
+
+            function reseteLocal() {
+                if (confirm("Are you sure?, you will loos all local data")) {
+                    if (confirm("Ready to reset local...")) {
+                        localStorage.removeItem("Tasks2");
+                        window.location.reload();
+                    }
+
+                }
+            }
+
+            function clr() {
+                ino.value = "";
+                scid.value = "A";
+                stype.value = "Type?";
+                snew.value = "New";
+                iarrive.value = "";
+                sactive.value = 1;
+                ifrecuency.value = "";
+                sbrand.value = "Heil";
+                elocal.value = "";
+            }
+
+            function selectTk(e) {
+                if (e.selectedIndex > 0) {
+                    if (e.id = "strocas") {
+                        troca = trocas[e.selectedIndex - 1];
+                        var o = troca;
+
+                        clr();
+
+                        ino.value = o.No;
+                        scid.value = o.cid;
+                        stype.value = o.type;
+                        snew.value = o.nuevo;
+                        iarrive.value = o.arrive;
+                        sactive.value = o.active;
+                        ifrecuency.value = o.frecuency;
+                        sbrand.value = o.brand;
+                        elocal.value = JSON.stringify(o).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+
+                        selForAdd();
+                    }
+
+                } else clr();
+            }
+
+
+            function selectTk2(e) {
+                if (e.selectedIndex > 0) {
+                    var o = e.artk[e.selectedIndex - 1];
+                    e.activetk = o;
+                    e.Index = e.selectedIndex - 1
+                    clr();
+                    ActualTrk = o;
+
+                    ino.value = o.No;
+                    scid.value = o.cid;
+                    stype.value = o.type;
+                    snew.value = o.nuevo;
+                    iarrive.value = o.arrive;
+                    sactive.value = o.active;
+                    ifrecuency.value = o.frecuency;
+                    sbrand.value = o.brand;
+                    elocal.value = JSON.stringify(o).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                    selForAdd()
+                } else clr();
+            }
+
+            function deletetk() {
+                var index = validateTk(ino.value)
+                if (index > -1) {
+                    if (confirm("Are you sure you want to delete this truck (" + ino.value + ")?")) {
+                        trocas.splice(index, 1);
+                        saveLocal();
+                    }
+
+                }
+            }
+
+            function showtrks() {
+                todoTk.appendChild(dstrocas);
+                if (todoTk.style.display === "none") {
+                    todoTk.style.display = "block"
+                    ctrls.style.display = 'none';
+                } else {
+                    todoTk.style.display = "none";
+                    ctrls.style.display = 'block';
+
+                }
+
+            }
+
+            function updateJob() {
+
+
+                //  djobs.active=;
+            }
+
+            function createJob() {
+
+                var dj = new Date().toString().split(":");
+                dj = dj[0] + ":" + dj[1]
+
+                var job = {};
+                job.date = fecha.value;
+                job.created = dj;
+                job.form = from.value;
+                job.to = to.value;
+                job.description = jdescription.value;
+                var e;
+                if (select.id = "strocas") e = strocas;
+
+                if (select.id === undefined || select.id === "sprojects" || jobn.value != strocas.value) {
+                    if (confirm("Do you want to add a New Project?")) {
+                        if (obTasks2.projects === undefined) obTasks2.projects = [];
+                        //  if(obTasks2.projects)
+                        var op = {};
+                        op.No = jobn.value;
+                        op.jobs = [];
+                        op.jobs.push(job)
+                        projects.push(op)
+                        alert("Adicionar nuevo proyecto\n\n" + JSON.stringify(projects));
+
+                        localStorage.setItem("Tasks2", JSON.stringify(obTasks2));
+                        sprojects.onfocus();
+
+                        return;
+                    }
+                    alert("No adicionar");
+                    return
+
+
+                }
+
+
+                var t = e.artk[e.Index]
+                //alert(e.Index)
+                if (t.jobs === undefined) t.jobs = []
+                t.jobs.push(job);
+                var s = JSON.stringify(obTasks2)
+                localStorage.setItem("Tasks2", s);
+                elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                // addJob(strocas);
+                fecha.value = "";
+                from.value = "";
+                to.value = "";
+                jdescription.value = "";
+
+                selForAdd();
+            }
+
+            function createJob3() {
+                var e = strocas;
+                if (e.value === undefined) {
+                    alert("Choose a Truck");
+                    return
+                } else;
+                if (djobs.active != undefined) {
+
+                } else {
+
+                }
+                var dj = new Date().toString().split(":");
+                dj = dj[0] + ":" + dj[1]
+
+                var job = {};
+                job.date = fecha.value;
+                job.created = dj;
+                job.form = from.value;
+                job.to = to.value;
+                job.description = jdescription.value;
+                var t = e.artk[e.Index]
+                //alert(e.Index)
+                if (t.jobs === undefined) t.jobs = []
+                t.jobs.push(job);
+                var s = JSON.stringify(obTasks2)
+                localStorage.setItem("Tasks2", s);
+                elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                // addJob(strocas);
+                fecha.value = "";
+                from.value = "";
+                to.value = "";
+                jdescription.value = "";
+
+                selForAdd();
+            }
+
+            function showJobDlg() {
+                dcrearj.style.display = "block";
+                dcrearj.insertBefore(dstrocas, dcrearj.firstChild);
+             //   jobn.value = strocas.value;
+
+            }
+
+            function selForAdd(e) {
+                //  this.job=""
+
+                djobs.innerHTML = "";
+                jobn.value = strocas.value;
+                var o = troca;
+                if (select.id === "sprojects") {
+                    jobn.value = sprojects.value;
+                    o = project;
+
+                }
+
+                alert(o)
+                alert(JSON.stringify(troca))
+                tasel.value = JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
+                if (o.jobs != undefined) {
+                    var js = o.jobs;
+                    //     alert(js.length)
+                    for (var i = 0; i < js.length; i++) {
+                        var u = document.createElement("button");
+                        u.setAttribute("class", "cbj");
+                        u.style.background = "blue";
+                        u.innerHTML = "Update";
+                        u.onclick = function() {
+                            if (confirm("Are you sure you want to Update it?")) {
+                                var ind = this.parentNode.Index;
+                                var o = strocas.activetk; //troca
+                                var job = this.parentNode.job;
+
+
+                                job.date = fecha.value;
+                                var dj = new Date().toString().split(":");
+                                dj = dj[0] + ":" + dj[1]
+
+                                job.created = dj;
+                                job.form = from.value;
+                                job.to = to.value;
+                                job.description = jdescription.value;
+
+                                var s = JSON.stringify(obTasks2);
+                                alert(s)
+                                //     localStorage.setItem("Tasks2", s);
+
+                                selForAdd();
+
+                            }
+
+                        }
+                        var b = document.createElement("button");
+                        b.setAttribute("class", "cbj")
+                        b.innerHTML = "Delete This";
+                        b.onclick = function() {
+                            if (confirm("Are you sure you want to delete this job?")) {
+                                //    if(select.id="strocas"){
+                                var ind = this.parentNode.Index;
+                                alert(ind);
+                                var o = troca;
+                                o.jobs.splice(ind, 1);
+                                // }
+
+                                //  if(select.id="strocas"){
+
+
+                                // } 
+                                this.parentNode.parentNode.removeChild(this.parentNode);
+                            }
+
+                        }
+                        var p = document.createElement("div");
+                        p.setAttribute("class", "cj")
+                        p.job = js[i];
+                        p.Index = i;
+
+                        var j = js[i];
+                        var jj = JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                        p.innerHTML = jj;
+                        djobs.appendChild(p)
+                        p.onclick = function() {
+                            fecha.value = this.job.date;
+                            from.value = this.job.form;
+                            to.value = this.job.to;
+                            jdescription.value = this.job.description;
+                            djobs.active = this.job;
+                            //     alert(djobs.active)
+
+                        }
+                        p.appendChild(b)
+                        p.appendChild(u)
+
+
+                    }
+
+                }
+
+            }
+
+            function selForAdd2(e) {
+                //  this.job=""
+                djobs.innerHTML = "";
+                jobn.value = strocas.value;
+                var o = troca;
+                tasel.value = JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
+                if (o.jobs != undefined) {
+                    var js = o.jobs;
+                    //     alert(js.length)
+                    for (var i = 0; i < js.length; i++) {
+                        var u = document.createElement("button");
+                        u.setAttribute("class", "cbj");
+                        u.style.background = "blue";
+                        u.innerHTML = "Update";
+                        u.onclick = function() {
+                            if (confirm("Are you sure you want to Update it?")) {
+                                var ind = this.parentNode.Index;
+                                var o = strocas.activetk;
+                                var job = this.parentNode.job;
+                                job.date = fecha.value;
+                                var dj = new Date().toString().split(":");
+                                dj = dj[0] + ":" + dj[1]
+
+                                job.created = dj;
+                                job.form = from.value;
+                                job.to = to.value;
+                                job.description = jdescription.value;
+
+                                var s = JSON.stringify(obTasks2)
+                                localStorage.setItem("Tasks2", s);
+
+                                selForAdd();
+
+                            }
+
+                        }
+                        var b = document.createElement("button");
+                        b.setAttribute("class", "cbj")
+                        b.innerHTML = "Delete This";
+                        b.onclick = function() {
+                            if (confirm("Are you sure you want to delete this job?")) {
+                                var ind = this.parentNode.Index;
+                                alert(ind);
+                                var o = troca;
+                                o.jobs.splice(ind, 1);
+
+                                this.parentNode.parentNode.removeChild(this.parentNode);
+
+                            }
+                        }
+                        var p = document.createElement("div");
+                        p.setAttribute("class", "cj")
+                        p.job = js[i];
+                        p.Index = i;
+
+                        var j = js[i];
+                        var jj = JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                        p.innerHTML = jj;
+                        djobs.appendChild(p)
+                        p.onclick = function() {
+                            fecha.value = this.job.date;
+                            from.value = this.job.form;
+                            to.value = this.job.to;
+                            jdescription.value = this.job.description;
+                            djobs.active = this.job;
+                            //     alert(djobs.active)
+
+                        }
+                        p.appendChild(b)
+                        p.appendChild(u)
+
+
+                    }
+
+                }
+
+            }
+
+            function dosctrls(v) {
+                if (v === "Show Trucks Dlg") showtrks();
+                if (v === "Show Job Dlg") showJobDlg(strocas);
+                 if (v === "Send Backup to Web") sendToWeb();
+                 if (v === "Recover Backup from Web") recoverFromWeb();
+                    if (v === "Show Tasks in editor") selKey(key);
+             
+               
+               
+                if (v === "Reinitiate App") window.location.reload();
+
+            }
+
+
+            function crearJob() {
+                if (jobn.value === undefined || jobn.value === "") {
+                    alert("No Job Name found");
+                    return;
+                }
+                var dj = new Date().toString().split(":");
+                dj = dj[0] + ":" + dj[1]
+                var job = {};
+                job.name = jobn.value;
+                job.date = fecha.value;
+                job.created = dj;
+                job.from = from.value;
+                job.to = to.value;
+                job.description = jdescription.value;
+                if (obTasks2.jobs === undefined) obTasks2.jobs = []
+                obTasks2.jobs.push(job);
+
+                localStorage.setItem("Tasks2", JSON.stringify(obTasks2));
+                djobs.appendChild(crearJobE(job));
+                alert("Job "+job.name+" Created")
+            }
+
+            function crearJobE(job) {
+                var p = document.createElement("div");
+                p.setAttribute("class", "cj")
+                p.job = job;
+                var jj = JSON.stringify(job).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                p.innerHTML = jj;
+                p.onclick = function() {
+                    ti.innerHTML = this.job.name;
+                    ti.ejob = this;
+                    jobn.value = this.job.name;
+                    fecha.value = this.job.date;
+                    from.value = this.job.from;
+                    to.value = this.job.to;
+                    jdescription.value = this.job.description;
+                    djobs.active = this.job;
+                }
+                return p;
+            }
+
+            function setUpSels() {
+                jobs = [];
+                var s = localStorage.getItem("Tasks2");
+
+//alert(s)
+               if (s === null) {
+                    obTasks2 = {};
+                    obTasks2.jobs = [];
+                    obTasks2.trocas = [];
+                    obTasks2.projects = [];
+                } else obTasks2 = JSON.parse(s);
+
+                trocas = obTasks2.trocas;
+              
+                projects = obTasks2.projects;
+
+                jobs = obTasks2.jobs;
+
+                strocas.innerHTML = "<option>Choose a Truck</option>";
+                var o = "";
+                for (var i = 0; i < trocas.length; i++) {
+                    o += "<option >" + trocas[i].No + "</option>";
+                    
+                    
+                }
+                strocas.innerHTML = strocas.innerHTML + o;
+ 
+
+                djobs.innerHTML = "";
+                for (var i = 0; i < jobs.length; i++) {
+                    djobs.appendChild(crearJobE(jobs[i]));
+
+                }
+
+            }
+
+            function findJob(ar, name) {
+                for (var i = 0; i < ar.length; i++) {
+                    if (ar[i].name === name) return {
+                        object: ar[i],
+                        index: i
+                    };
+                }
+                return {
+                    object: undefined,
+                    index: -1
+                }
+            }
+
+            function indexOfJob(ar, name) {
+                var i = 0;
+                for (i = 0; i < ar.length; i++) {
+                    if (ar[i].name === name) return i;
+                }
+                if (i >= ar.length) return -1
+            }
+
+            function search(v) {
+                var ar = djobs.children;
+                for (var i = 0; i < ar.length; i++) {
+                    var e = ar[i];
+                    if (e.innerHTML.indexOf(v) > -1) e.style.display = 'block';
+                    else e.style.display = "none"
+                }
+            }
+
+            function deletej(e) {
+                if(e===undefined){alert("Job no Exist");return}
+                var j = e.job;
+                if (confirm("Are you sure you want to Delete Job " + j.name + "?")) {
+                    var ind = indexOfJob(jobs, e.job.name);
+                    if (ind > -1) {
+                        if (confirm("Job found, proceed deleting?")) {
+                            jobs.splice(ind, 1);
+
+                            e.parentNode.removeChild(e);
+                            alert("Job Deleted")
+                            saveObj();
+                        }
+                    } else alert("Job not found")
+                }
+
+            }
+
+            function updatej(e) {
+                if(e===undefined){alert("Job no Exist");return}
+                var j = e.job;
+                if (confirm("Are you sure you want to Update Job " + j.name + "?")) {
+                  //  alert(obTasks2.jobs[j])
+                    var ind = indexOfJob(jobs, e.job.name);
+                    if (ind > -1) {
+                        j.date = fecha.value;
+                        j.from = from.value;
+                        j.to = to.value;
+                        j.description = jdescription.value;
+
+                        var dj = new Date().toString().split(":");
+                        dj = dj[0] + ":" + dj[1]
+                        j.created = dj;
+
+                        alert("Job " +j.name+" Updated");
+                 //      var jj = JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                            e.innerHTML=JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                        saveObj();
+                    } else alert("Job not found")
+                }
+
+            }
+
+            function saveObj() {
+                localStorage.setItem("Tasks2", JSON.stringify(obTasks2))
+            }
+            function selTroca(t){
+                jobn.value=strocas.value;
+                isearch.value=jobn.value;
+                isearch.oninput();
+              var o=trocas[strocas.selectedIndex-1];
+                tasel.value= JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
+   
+                
+            }
+            
+          function inicRec(e) {
+        //  alert(e.style.background);alert(e.st);
+       // var a = e.parentNode.getElementsByTagName("textarea")[0];
+       a=e
+        if (!e.st) {
+            mic.style.background = "rgb(250,0,0)";
+            e.st = true;
+            startvoice(e);
+        } else {
+            mic.style.background = "rgb(0,250,0)";
+            e.st = false;
+          //  e.onblur()
+            try {
+                speechRecognizer.stop();
+            } catch (ee) {
+                alert(ee)
+            }
+
+        }
+
+
+
+    }
+     
+            
+             function startvoice(a) {
+        // var a=e.parentNode.getElementsByTagName("textarea")[0];
+        var b = mic;//. a.parentNode.getElementsByTagName("button")[0];
+         
+        try {
+
+            speechRecognizer.start();
+            var ac = "",
+                rep = 0;
+            var finalTranscripts = "";
+            speechRecognizer.onspeechend = function() {
+              //  b.style.background = "#f00";
+                temp.style.display="none";
+                setTimeout(function() {
+                    if (a.st) {
+
+                        if (ac != "") {
+
+                            ac = ac.charAt(0).toUpperCase() + ac.slice(1)
+                            a.value += ac + ". ";
+                            ac = a.value;// alert(ac)
+                            ac = "";
+
+                        }
+                        bexcomando = false;
+                        //     speechRecognizer.start();
+
+                    } else {
+                        speechRecognizer.stop();
+                        b.style.background = "#0f0"
+                    }
+                }, 10)
+            }
+
+            speechRecognizer.onend = function() {
+                b.style.background = "#0f0";
+              temp.style.display="none";
+                setTimeout(function() {
+                    if (a.st) {
+                        rep++;
+
+                        if (rep > 2) {
+                            a.value += "\n\n";
+                            rep = 0;
+                        }
+                        ac = "";
+                        bexcomando = false;
+                        speechRecognizer.start();
+                        b.style.background = "#f00";
+                        temp.style.display="none";
+                   //     a.value+=temp.value;
+
+
+                    } else {
+                        temp.style.display="none";
+                        speechRecognizer.stop();
+                        b.style.background = "#0f0";
+                   //    a.value+=temp.value;
+                    }
+
+                }, 10)
+            };
+
+            speechRecognizer.onresult = function() {
+                comando = event.results[0][0].transcript;
+                temp.style.display="block";
+                //if(comando.indexOf("coma coma")>-1)
+                temp.value=comando;
+                ac = comando; // a.value=comando;//exComando(comando)  if (e.st)
+
+            }
+            speechRecognizer.onerror = function(event) {};
+
+
+        } catch (e) {
+            alert(e)
+        };
+
+    }
+    function sendToWeb(){
+        if(confirm("Are you sure to send object to Web? It will rewrite it")){
+            UpdateJ(link,obTasks2,function(){alert("All done...")});
+        }
+    }
+    
+    function recoverFromWeb(){
+              if(confirm("This will load de backup from Web? Confirm next step to rewrite local")){
+            GetJ(link,function(ob){
+                alert("All done...\n\n"+JSON.stringify(ob));
+                elocal.value=JSON.stringify(ob);
+                alert("check editor to make sure it will be ok");
+            
+            
+            });
+        } 
+        
+    }
+    function selKey(v){
+        alert(v);
+        elocal.value=localStorage.getItem(v);
+        
+    }
+ 
+            
+            
+        </script>
+
+</head>
+
+</html>
