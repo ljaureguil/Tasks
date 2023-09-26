@@ -2,7 +2,7 @@
 
 <head>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/9785/9785466.png">
-    <title>Panorama 360</title>
+    <title>Task Notes</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
@@ -233,16 +233,27 @@
                     </input><br>From:
             <input id="from" type="number">To:
             <input id="to" type="number">Date:
-            <input id="fecha" type="date">Description:
+            <input id="fecha" type="date" >Description:
             <button id="mic" onclick="inicRec(jdescription)">&#127908;</button>
             <textarea id="jdescription" value=""></textarea>
-  
-            <button onclick="dcrearj.style.display='none'">Close</button>
-             
-                    <button onclick="updatej(ti.ejob)">Update</button>
-                    <button onclick="deletej(ti.ejob)">Delete</button> 
-                    <button onclick="crearJob();//createJob()" style="background:#aaffaa;">Add</button>   
+  <div id="contr">
+      <select id="scont" oninput="selcont(this.value)">
+            <option>Sel Option</option>   
+        <option>Add</option>
+        <option>Update</option>
+ 
+        <option>Clr Note</option>
+       <option>Clr All</option>
+       <option>Show String</option>
+               <option>Close</option> 
+        <option></option>
+        <option>Delete</option>
+          <option></option>
+     
+      </select>
+    
             <div id="djobs"></div>
+        </div>
 
         </div>
         
@@ -282,9 +293,10 @@
       
       </script>
         <script> 
-           fecha.value=new Date().toISOString().substring(0, 10);  
+        fecha.value=new Date().toISOString().substring(0, 10);
         var link='https://jsonblob.com/api/1155945790782169088'
             var speechRecognizer;
+
     if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
         speechRecognizer = new webkitSpeechRecognition();
         speechRecognizer.continuous = false;
@@ -296,24 +308,24 @@
     }
 
     var active = false;
-              ActualTrk = {}
+            ActualTrk = {}
             dcrearj.style.display = "none"
             todoTk.style.display = "none";
             dadjob.style.display = 'none';
-            obTasks2 = {};
-            obTasks2.projects = [];
-            obTasks2.jobs = []
+            obTasks = {};
+            obTasks.projects = [];
+            obTasks.jobs = []
             var trocas = [], projects=[], troca="", project="", select="",jobs=[];
            
  // localStorage.removeItem("Tasks2");
  /* 
 var h='{"trocas":[{"No":"26","cid":"A","type":"SL","nuevo":"Media","arrive":"2","active":"1","frecuency":"8","brand":"Heil"},{"No":"25","cid":"A","type":"SL","nuevo":"Media","arrive":"2","active":"1","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-08-15","created":"Sat Aug 26 2023 08:22","form":"12.5","to":"16.5","description":"Repair cylinders"}]},{"No":"201","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"229","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"202","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"created":"Wed Aug 23 2023 14","form":"12","to":"23","description":"Fixing hoses"},{"created":"Wed Aug 23 2023 14","form":"12","to":"23","description":"Fixing hoses"},{"date":"2023-08-21","created":"Mon Aug 28 2023 16:10","form":"12","description":"reparing hoses","to":"14.5"}]},{"No":"24","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"created":"Mon Aug 28 2023 16:17","form":"12","to":"16.5","description":"Repair leak","date":"2023-08-19"},{"created":"Fri Aug 25 2023 23:11","form":"6","to":"9","description":"Repair gggg","date":"2023-08-25"},{"date":"2023-08-25","created":"Fri Aug 25 2023 12:54","form":"16.5","to":"17","description":"Repair leak"}]},{"No":"203","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-07-27","created":"Sat Aug 26 2023 07:35","form":"10","to":"12","description":"Repair seal"},{"date":"2023-07-27","created":"Sat Aug 26 2023 07:36","form":"12.5","to":"16.5","description":"Shop"}]},{"No":"200","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"400","cid":"A","type":"RL","nuevo":"New","arrive":"12","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-22","created":"Sat Aug 26 2023 11:48","form":"12","description":"fix leak and greasing"}]},{"No":"27","cid":"A","type":"SL","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Lebrie"},{"No":"3","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-16","created":"Sat Aug 26 2023 08:29","form":"6","to":"12","description":"Repair cylinders and cracks"}]},{"No":"8","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"1","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-08-18","created":"Sat Aug 26 2023 08:57","form":"12.5","to":"16.5","description":"Repairblade"}]},{"No":"19","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"0","frecuency":"8","brand":"Heil"},{"No":"8","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"0","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-07-28","created":"Sat Aug 26 2023 07:39","form":"12.5","to":"16.5","description":"Reparing srn leaks"}]},{"No":"2","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"0","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-22","created":"Sat Aug 26 2023 10:22","form":"6","description":"Reparing some leaks and tail gate seal"}]},{"No":"104","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-19","created":"Sat Aug 26 2023 08:56","form":"12.5","to":"13.5","description":"Repair light "}]},{"No":"13","cid":"A","type":"FB","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Heil"},{"No":"1","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"0","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-17","created":"Sat Aug 26 2023 08:54","form":"12.5","to":"16.5","description":"Fixing leaks "}]},{"No":"101","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"0","frecuency":"9","brand":"Heil"},{"No":"9","cid":"A","type":"SL","nuevo":"Old","arrive":"3","active":"0","frecuency":"7","brand":"Heil","jobs":[{"date":"2023-08-04","created":"Sat Aug 26 2023 08:08","form":"12.5","to":"16.5","description":"Welding cracks "}]},{"No":"10","cid":"A","type":"RL","nuevo":"Old","arrive":"12","active":"0","frecuency":"5","brand":"Heil"},{"No":"102","cid":"A","type":"SL","nuevo":"New","arrive":"2","active":"1","frecuency":"9","brand":"Heil"},{"No":"301","cid":"A","type":"RO","nuevo":"New","arrive":"2","active":"1","frecuency":"9","brand":"Heil"},{"No":"103","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"0","frecuency":"9","brand":"Heil"},{"No":"13","cid":"A","type":"FB","nuevo":"Old","arrive":"12","active":"0","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-15","created":"Sat Aug 26 2023 08:22","form":"6","to":"11","description":"Repair gate"}]},{"No":"20","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"8","brand":"Heil"},{"No":"100","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"1","frecuency":"9","brand":"Heil"},{"No":"17","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"7","brand":"Heil","jobs":[{"date":"2023-08-21","created":"Sat Aug 26 2023 08:58","form":"12.5","to":"16.5","description":"Repair side doors"}]},{"No":"28","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"1","frecuency":"6","brand":"Lebrie","jobs":[{"date":"2023-08-04","created":"Sat Aug 26 2023 08:09","form":"12.5","to":"16.5","description":"Welding cracks "}]},{"No":"16","cid":"A","type":"RO","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Lebrie","jobs":[{"date":"2023-07-31","created":"Sat Aug 26 2023 07:43","form":"14.5","to":"16.5","description":"Reparing tarp"}]},{"No":"300","cid":"A","type":"RO","nuevo":"New","arrive":"12","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-01","created":"Sat Aug 26 2023 07:48","form":"15.5","to":"16.5","description":"Reparing broken pin"}]},{"No":"69","cid":"D","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"2","brand":"Heil","jobs":[{"date":"2023-08-05","created":"Sat Aug 26 2023 08:11","form":"12.5","to":"15","description":"Reparing broken hoses"}]},{"No":"1","cid":"A","type":"RO","nuevo":"Old","arrive":"12","active":"1","frecuency":"8","brand":"Heil"},{"No":"6","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"1","frecuency":"6","brand":"Heil"},{"No":"5","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"8","brand":"Heil"}],"projects":[]}';
 localStorage.setItem("Tasks2",h);
-obTasks2=JSON.parse(h);
-obTasks2.jobs=[];
-jobs=obTasks2.jobs;
-alert(JSON.stringify(obTasks2));
-localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
+obTasks=JSON.parse(h);
+obTasks.jobs=[];
+jobs=obTasks.jobs;
+alert(JSON.stringify(obTasks));
+localStorage.setItem("Tasks2",JSON.stringify(obTasks))
 
  */
 
@@ -355,9 +367,9 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                         tk.active = sactive.value;
                         tk.frecuency = ifrecuency.value;
                         tk.brand = sbrand.value;
-                        trocas[index] = tk; //  obTasks2.trks.push(tk);
+                        trocas[index] = tk; //  obTasks.trks.push(tk);
 
-                        var s = JSON.stringify(obTasks2)
+                        var s = JSON.stringify(obTasks)
                         var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
                         elocal.value = ss;
                         setUpselT()
@@ -377,9 +389,9 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                     tk.frecuency = ifrecuency.value;
                     tk.brand = sbrand.value;
                     trocas.push(tk)
-                    //  obTasks2.trks.push(tk);
+                    //  obTasks.trks.push(tk);
 
-                    var s = JSON.stringify(obTasks2)
+                    var s = JSON.stringify(obTasks)
                     var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
                     elocal.value = ss;
                     setUpselT()
@@ -391,7 +403,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
 
             function saveLocal() {
 
-                var s = JSON.stringify(obTasks2)
+                var s = JSON.stringify(obTasks)
                 localStorage.setItem("Tasks2", s);
                 var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
                 elocal.value = s;
@@ -513,8 +525,8 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
 
                 if (select.id === undefined || select.id === "sprojects" || jobn.value != strocas.value) {
                     if (confirm("Do you want to add a New Project?")) {
-                        if (obTasks2.projects === undefined) obTasks2.projects = [];
-                        //  if(obTasks2.projects)
+                        if (obTasks.projects === undefined) obTasks.projects = [];
+                        //  if(obTasks.projects)
                         var op = {};
                         op.No = jobn.value;
                         op.jobs = [];
@@ -522,7 +534,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                         projects.push(op)
                         alert("Adicionar nuevo proyecto\n\n" + JSON.stringify(projects));
 
-                        localStorage.setItem("Tasks2", JSON.stringify(obTasks2));
+                        localStorage.setItem("Tasks2", JSON.stringify(obTasks));
                         sprojects.onfocus();
 
                         return;
@@ -538,7 +550,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                 //alert(e.Index)
                 if (t.jobs === undefined) t.jobs = []
                 t.jobs.push(job);
-                var s = JSON.stringify(obTasks2)
+                var s = JSON.stringify(obTasks)
                 localStorage.setItem("Tasks2", s);
                 elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
                 // addJob(strocas);
@@ -574,7 +586,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                 //alert(e.Index)
                 if (t.jobs === undefined) t.jobs = []
                 t.jobs.push(job);
-                var s = JSON.stringify(obTasks2)
+                var s = JSON.stringify(obTasks)
                 localStorage.setItem("Tasks2", s);
                 elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
                 // addJob(strocas);
@@ -632,7 +644,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                                 job.to = to.value;
                                 job.description = jdescription.value;
 
-                                var s = JSON.stringify(obTasks2);
+                                var s = JSON.stringify(obTasks);
                                 alert(s)
                                 //     localStorage.setItem("Tasks2", s);
 
@@ -717,7 +729,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                                 job.to = to.value;
                                 job.description = jdescription.value;
 
-                                var s = JSON.stringify(obTasks2)
+                                var s = JSON.stringify(obTasks)
                                 localStorage.setItem("Tasks2", s);
 
                                 selForAdd();
@@ -776,7 +788,9 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
              
                
                
-                if (v === "Reinitiate App") window.location.reload();
+                if (v === "Reinitiate App"){sctrls.value="Choose an Option"; window.location.reload();}
+               
+                sctrls.value="Choose an Option";
 
             }
 
@@ -795,10 +809,10 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                 job.from = from.value;
                 job.to = to.value;
                 job.description = jdescription.value;
-                if (obTasks2.jobs === undefined) obTasks2.jobs = []
-                obTasks2.jobs.push(job);
+                if (obTasks.jobs === undefined) obTasks.jobs = []
+                obTasks.jobs.push(job);
 
-                localStorage.setItem("Tasks2", JSON.stringify(obTasks2));
+                localStorage.setItem("Tasks2", JSON.stringify(obTasks));
                 djobs.appendChild(crearJobE(job));
                 alert("Job "+job.name+" Created")
             }
@@ -825,20 +839,18 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
             function setUpSels() {
                 jobs = [];
                 var s = localStorage.getItem("Tasks2");
-
-//alert(s)
                if (s === null) {
-                    obTasks2 = {};
-                    obTasks2.jobs = [];
-                    obTasks2.trocas = [];
-                    obTasks2.projects = [];
-                } else obTasks2 = JSON.parse(s);
+                    obTasks = {};
+                    obTasks.jobs = [];
+                    obTasks.trocas = [];
+                    obTasks.projects = [];
+                } else obTasks = JSON.parse(s);
 
-                trocas = obTasks2.trocas;
+                trocas = obTasks.trocas;
               
-                projects = obTasks2.projects;
+                projects = obTasks.projects;
 
-                jobs = obTasks2.jobs;
+                jobs = obTasks.jobs;
 
                 strocas.innerHTML = "<option>Choose a Truck</option>";
                 var o = "";
@@ -853,7 +865,6 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                 djobs.innerHTML = "";
                 for (var i = 0; i < jobs.length; i++) {
                     djobs.appendChild(crearJobE(jobs[i]));
-
                 }
 
             }
@@ -910,7 +921,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
                 if(e===undefined){alert("Job no Exist");return}
                 var j = e.job;
                 if (confirm("Are you sure you want to Update Job " + j.name + "?")) {
-                  //  alert(obTasks2.jobs[j])
+                  //  alert(obTasks.jobs[j])
                     var ind = indexOfJob(jobs, e.job.name);
                     if (ind > -1) {
                         j.date = fecha.value;
@@ -932,7 +943,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
             }
 
             function saveObj() {
-                localStorage.setItem("Tasks2", JSON.stringify(obTasks2))
+                localStorage.setItem("Tasks2", JSON.stringify(obTasks))
             }
             function selTroca(t){
                 jobn.value=strocas.value;
@@ -1050,7 +1061,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
     }
     function sendToWeb(){
         if(confirm("Are you sure to send object to Web? It will rewrite it")){
-            UpdateJ(link,obTasks2,function(){alert("All done...")});
+            UpdateJ(link,obTasks,function(){alert("All done...")});
         }
     }
     
@@ -1071,8 +1082,23 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks2))
         elocal.value=localStorage.getItem(v);
         
     }
- 
-            
+ function selcont(v){
+    if(v==="Add")crearJob();
+    if(v==="Update")updatej(ti.ejob);
+    if(v==="Show String"){dcrearj.style.display="none";elocal.style.display="block";elocal.value=repObj(jobs);}
+    if(v==="Delete")deletej(ti.ejob);
+    if(v==="Clr Note")jdescription.value="";
+    if(v==="Clr All"){jdescription.value="";jobn.value="";from.value=0;to.value=0;}
+      if(v==="Close")dcrearj.style.display='none';  
+  scont.value="Sel Option"
+
+
+
+ }
+ function repObj(ob){
+  var s=JSON.stringify(ob).replace(/"/g," ").replace(/:/g,": ").replace(/,/g,"\n").replace(/{/g,"\n").replace(/}/g,"\n");
+     return s;
+ }       
             
         </script>
 
