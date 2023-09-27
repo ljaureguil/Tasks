@@ -202,7 +202,13 @@
 
                     <select id="strocas" oninput="selTroca(this.value);//selectTk(this)" onfocus="select=this;">
                         <option>Choose a Truck</option>
-                    </select>  <button onclick="jobn.value=strocas.value;isearch.value=jobn.value;isearch.oninput();//selForAdd();">Sel</button>Name: 
+                    </select>
+                    
+                    <button onclick="jobn.value=strocas.value;isearch.value=jobn.value;isearch.oninput();//selForAdd();">Sel</button> 
+                    <select id="sproyectos" oninput="isearch.value=this.value;search(this.value)">
+                        <option>Sel a Project</option>
+                    
+                    </select>
                     <textarea id="tasel"></textarea>
                     <span id="ti" style="color:red;font-size:8px;padding:2px;margin-left: 30px;border-style: solid;border-color: rgb(9, 84, 204);"></span>
  
@@ -332,11 +338,12 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
              setUpSels();
 
             function setUpselT() {
-                strocas.innerHTML = "<option>Choose a Truck</option>";
-                var o = "";
-                for (var i = 0; i < trocas.length; i++) {
-                    o += "<option >" + trocas[i].No + "</option>";
-                }
+            //    alert(trocas.length)
+          //      strocas.innerHTML = "<option>Choose a Truck</option>";
+            //    var o = "";
+            //    for (var i = 0; i < trocas.length; i++) {
+             //       o += "<option >" + trocas[i].No + "</option>";
+              //  }
 
             }
 
@@ -846,7 +853,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                     obTasks.projects = [];
                 } else obTasks = JSON.parse(s);
 
-                trocas = obTasks.trocas;
+                trocas = obTasks.trocas;//alert(trocas.length)
               
                 projects = obTasks.projects;
 
@@ -857,16 +864,31 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 for (var i = 0; i < trocas.length; i++) {
                     o += "<option >" + trocas[i].No + "</option>";
                     
-                    
+                 //   alert(o)
                 }
                 strocas.innerHTML = strocas.innerHTML + o;
  
 
                 djobs.innerHTML = "";
+                sproyectos.innerHTML="<option>Sel project</option>";
+            
                 for (var i = 0; i < jobs.length; i++) {
                     djobs.appendChild(crearJobE(jobs[i]));
+                  if(sproyectos.innerHTML.indexOf(">"+jobs[i].name+"<")===-1)  sproyectos.innerHTML+="<option>"+jobs[i].name+"</option>";
+                
+                  
                 }
+                setUpselT()
 
+            }
+            function validateProj(v) {
+            var i=0;
+                for ( i = 0; i < jobs.length; i++) {
+                 if(v===jobs[i].name) return true;
+                 // i=jobs.length;
+                }
+                alert(i)
+                if(i>=jobs.length) return false
             }
 
             function findJob(ar, name) {
@@ -1071,6 +1093,10 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 alert("All done...\n\n"+JSON.stringify(ob));
                 elocal.value=JSON.stringify(ob);
                 alert("check editor to make sure it will be ok");
+                if(confirm("Are you sure you want to send it to Local Object?, after that the App will reinitialize")){
+                    localStorage.setItem("Tasks2",elocal.value);
+                    window.location.reload();
+                } 
             
             
             });
