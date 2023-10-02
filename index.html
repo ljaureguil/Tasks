@@ -348,7 +348,7 @@
         }
 
         jobs = [];
-                var s = localStorage.getItem(Key);
+                var s = localStorage.getItem(Key);alert(s)
                 obTasks = {};
                 //  var s = localStorage.getItem(Key);
                if (s === null) {
@@ -1144,11 +1144,11 @@ selKey(skey.value);
             GetJ(link,function(ob){
                 alert("This is what is in Web...\n\n"+JSON.stringify(ob));
                 alert("This is what is in Local...\n\n"+localStorage.getItem(Key))
-                elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
+                elocal.value="Local:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
                 alert("check editor to make sure it will be ok and come back, or proceed in the next step.");
                 if(confirm("Are you sure you want to send it to Local Object?, after that the App will reinitialize")){
-                    localStorage.setItem(Key,elocal.value);
-                    window.location.reload();
+                    localStorage.setItem(Key,JSON.stringify(ob));
+                  //  window.location.reload();
                 } 
             
             
