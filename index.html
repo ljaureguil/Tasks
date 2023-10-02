@@ -110,6 +110,17 @@
         box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
        opacity:.85;
     }      
+    #dsetupt{
+        padding:5px;
+        border-radius: 5px;
+        border-style: solid;
+        display:none;
+        position: absolute;;
+        top:10%;
+        left:10%;
+        width: 80%;
+        background-color: yellow;
+    }
         
     </style>
     <div id="todo">
@@ -121,15 +132,18 @@
                 <option>Show Job Dlg</option>
 
                 <option>Show Tasks in editor</option>
+                <option>Set Up Task</option>
+                <option>Show Actual Task Obj</option>
                 <option></option>
-                <option>Reinitiate App</option>              <option></option>
+                <option>Reinitiate App</option>
+                              <option></option>
                 <option>Send Backup to Web</option>
                 <option>Recover Backup from Web</option>
+                
             </select>
             <select id="skey" oninput="selKey(this.value)">
             <option>Sel Key</option>
-            <option>Tasks</option> 
-            <option>Tasks2</option>
+             <option>Tasks2</option>
             <option></option>
             </select>
         </div>
@@ -204,13 +218,13 @@
                         <option>Choose a Truck</option>
                     </select>
                     
-                    <button onclick="jobn.value=strocas.value;isearch.value=jobn.value;isearch.oninput();//selForAdd();">Sel</button> 
+                    <button onclick="isearch.value=strocas.value;isearch.value=isearch.value;isearch.oninput();//selForAdd();">Sel</button> 
                     <select id="sproyectos" oninput="isearch.value=this.value;search(this.value)">
                         <option>Sel a Project</option>
                     
                     </select>
                     <textarea id="tasel"></textarea>
-                    <span id="ti" style="color:red;font-size:8px;padding:2px;margin-left: 30px;border-style: solid;border-color: rgb(9, 84, 204);"></span>
+                    <span id="ti" style="display:none;color:red;font-size:8px;padding:2px;margin-left: 30px;border-style: solid;border-color: rgb(9, 84, 204);"></span>
  
                     
  
@@ -233,9 +247,8 @@
         </div>
         </todo>
         <div id="dcrearj">
-          Job:
-            <input id="jobn" value=''> 
-             SEARCH:<input id="isearch" style="background:#ffcccc" oninput="search(this.value);">
+          Job/Search:
+            <input id="isearch" style="background:#ffcccc" oninput="search(this.value);">
                     </input><br>From:
             <input id="from" type="number">To:
             <input id="to" type="number">Date:
@@ -262,10 +275,19 @@
         </div>
 
         </div>
+        <div id="dsetupt">
+            Key:<input id="ina" style="width: 95%;" ><br>
+            Link:<input id="ilin"  style="width: 95%;"><br>
+            <button onclick="setUpTask()">Test it</button><br>
+            <textarea id="ttx" style="width: 98%;height:200px;"></textarea>
+            If Looks good press "Process" <button onclick="processNewTask()">Process</button>
+            <button onclick="repLink()" style="color:white;background:red">Replace Link Only</button>   
+            <button onclick="dsetupt.style.display='none'">Close</button>
+        </div>
         
       <textarea id="temp" value=""></textarea>  
       <script>
-      var key="Tasks2";skey.value=key;
+  
              GetJ=function(url, callback) {
             var xhr = new XMLHttpRequest()
             xhr.open('GET', url + '/1', true)
@@ -274,7 +296,8 @@
                 if (xhr.readyState == 4 && xhr.status == "200") {
                     callback(users);
                 } else {
-                    console.error(users);
+                    //console.error(users);
+                    return users.error=xhr.readyState
                 }
             }
             xhr.send(null);
@@ -300,8 +323,43 @@
       </script>
         <script> 
         fecha.value=new Date().toISOString().substring(0, 10);
-        var link='https://jsonblob.com/api/1155945790782169088'
-            var speechRecognizer;
+        var link='https://jsonblob.com/api/1155945790782169088';
+        var tasksC={};//tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1155945790782169088",note:""})
+        var tasksCs=localStorage.getItem("tasksCtrl");
+        var ob={};
+        if(tasksCs===null){
+           tasksC={};
+           tasksC.tasks=[]
+          alert("No Tasks jet")
+          localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));
+        }
+        else{
+            tasksC=JSON.parse(tasksCs);
+
+        }
+        if(tasksC.tasks.length===0){ 
+            tasksC.tasks=[]
+            tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1155945790782169088",note:""})}
+        var Key=tasksC.tasks[0].key;skey.value=Key;
+        skey.innerHTML="<option>Sel Key</option>";
+   //     alert(JSON.stringify(tasksC))
+        for(var i=0;i<tasksC.tasks.length;i++){
+            skey.innerHTML+="<option>"+tasksC.tasks[i].key+"</option>"
+        }
+
+        jobs = [];
+                var s = localStorage.getItem(Key);
+                obTasks = {};
+                //  var s = localStorage.getItem(Key);
+               if (s === null) {
+                    obTasks.jobs = [];
+                    obTasks.trocas = [];
+                    obTasks.projects = [];
+                    localStorage.setItem(Key,JSON.stringify(obTasks))
+                } else obTasks = JSON.parse(s);
+                obTasks.key=Key;
+
+        var speechRecognizer;
 
     if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
         speechRecognizer = new webkitSpeechRecognition();
@@ -319,23 +377,14 @@
             todoTk.style.display = "none";
             dadjob.style.display = 'none';
             obTasks = {};
+            obTasks.trocas=[]
             obTasks.projects = [];
             obTasks.jobs = []
             var trocas = [], projects=[], troca="", project="", select="",jobs=[];
-           
- // localStorage.removeItem("Tasks2");
- /* 
-var h='{"trocas":[{"No":"26","cid":"A","type":"SL","nuevo":"Media","arrive":"2","active":"1","frecuency":"8","brand":"Heil"},{"No":"25","cid":"A","type":"SL","nuevo":"Media","arrive":"2","active":"1","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-08-15","created":"Sat Aug 26 2023 08:22","form":"12.5","to":"16.5","description":"Repair cylinders"}]},{"No":"201","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"229","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"202","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"created":"Wed Aug 23 2023 14","form":"12","to":"23","description":"Fixing hoses"},{"created":"Wed Aug 23 2023 14","form":"12","to":"23","description":"Fixing hoses"},{"date":"2023-08-21","created":"Mon Aug 28 2023 16:10","form":"12","description":"reparing hoses","to":"14.5"}]},{"No":"24","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"created":"Mon Aug 28 2023 16:17","form":"12","to":"16.5","description":"Repair leak","date":"2023-08-19"},{"created":"Fri Aug 25 2023 23:11","form":"6","to":"9","description":"Repair gggg","date":"2023-08-25"},{"date":"2023-08-25","created":"Fri Aug 25 2023 12:54","form":"16.5","to":"17","description":"Repair leak"}]},{"No":"203","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-07-27","created":"Sat Aug 26 2023 07:35","form":"10","to":"12","description":"Repair seal"},{"date":"2023-07-27","created":"Sat Aug 26 2023 07:36","form":"12.5","to":"16.5","description":"Shop"}]},{"No":"200","cid":"A","type":"FL","nuevo":"New","arrive":"10","active":"1","frecuency":"9","brand":"Heil"},{"No":"400","cid":"A","type":"RL","nuevo":"New","arrive":"12","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-22","created":"Sat Aug 26 2023 11:48","form":"12","description":"fix leak and greasing"}]},{"No":"27","cid":"A","type":"SL","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Lebrie"},{"No":"3","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-16","created":"Sat Aug 26 2023 08:29","form":"6","to":"12","description":"Repair cylinders and cracks"}]},{"No":"8","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"1","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-08-18","created":"Sat Aug 26 2023 08:57","form":"12.5","to":"16.5","description":"Repairblade"}]},{"No":"19","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"0","frecuency":"8","brand":"Heil"},{"No":"8","cid":"A","type":"SL","nuevo":"Old","arrive":"5","active":"0","frecuency":"8","brand":"Heil","jobs":[{"date":"2023-07-28","created":"Sat Aug 26 2023 07:39","form":"12.5","to":"16.5","description":"Reparing srn leaks"}]},{"No":"2","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"0","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-22","created":"Sat Aug 26 2023 10:22","form":"6","description":"Reparing some leaks and tail gate seal"}]},{"No":"104","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-19","created":"Sat Aug 26 2023 08:56","form":"12.5","to":"13.5","description":"Repair light "}]},{"No":"13","cid":"A","type":"FB","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Heil"},{"No":"1","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"0","frecuency":"4","brand":"Heil","jobs":[{"date":"2023-08-17","created":"Sat Aug 26 2023 08:54","form":"12.5","to":"16.5","description":"Fixing leaks "}]},{"No":"101","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"0","frecuency":"9","brand":"Heil"},{"No":"9","cid":"A","type":"SL","nuevo":"Old","arrive":"3","active":"0","frecuency":"7","brand":"Heil","jobs":[{"date":"2023-08-04","created":"Sat Aug 26 2023 08:08","form":"12.5","to":"16.5","description":"Welding cracks "}]},{"No":"10","cid":"A","type":"RL","nuevo":"Old","arrive":"12","active":"0","frecuency":"5","brand":"Heil"},{"No":"102","cid":"A","type":"SL","nuevo":"New","arrive":"2","active":"1","frecuency":"9","brand":"Heil"},{"No":"301","cid":"A","type":"RO","nuevo":"New","arrive":"2","active":"1","frecuency":"9","brand":"Heil"},{"No":"103","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"0","frecuency":"9","brand":"Heil"},{"No":"13","cid":"A","type":"FB","nuevo":"Old","arrive":"12","active":"0","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-15","created":"Sat Aug 26 2023 08:22","form":"6","to":"11","description":"Repair gate"}]},{"No":"20","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"8","brand":"Heil"},{"No":"100","cid":"A","type":"SL","nuevo":"New","arrive":"3","active":"1","frecuency":"9","brand":"Heil"},{"No":"17","cid":"A","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"7","brand":"Heil","jobs":[{"date":"2023-08-21","created":"Sat Aug 26 2023 08:58","form":"12.5","to":"16.5","description":"Repair side doors"}]},{"No":"28","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"1","frecuency":"6","brand":"Lebrie","jobs":[{"date":"2023-08-04","created":"Sat Aug 26 2023 08:09","form":"12.5","to":"16.5","description":"Welding cracks "}]},{"No":"16","cid":"A","type":"RO","nuevo":"Old","arrive":"12","active":"1","frecuency":"9","brand":"Lebrie","jobs":[{"date":"2023-07-31","created":"Sat Aug 26 2023 07:43","form":"14.5","to":"16.5","description":"Reparing tarp"}]},{"No":"300","cid":"A","type":"RO","nuevo":"New","arrive":"12","active":"1","frecuency":"9","brand":"Heil","jobs":[{"date":"2023-08-01","created":"Sat Aug 26 2023 07:48","form":"15.5","to":"16.5","description":"Reparing broken pin"}]},{"No":"69","cid":"D","type":"FL","nuevo":"Old","arrive":"10","active":"1","frecuency":"2","brand":"Heil","jobs":[{"date":"2023-08-05","created":"Sat Aug 26 2023 08:11","form":"12.5","to":"15","description":"Reparing broken hoses"}]},{"No":"1","cid":"A","type":"RO","nuevo":"Old","arrive":"12","active":"1","frecuency":"8","brand":"Heil"},{"No":"6","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"1","frecuency":"6","brand":"Heil"},{"No":"5","cid":"A","type":"SL","nuevo":"Old","arrive":"2","active":"0","frecuency":"8","brand":"Heil"}],"projects":[]}';
-localStorage.setItem("Tasks2",h);
-obTasks=JSON.parse(h);
-obTasks.jobs=[];
-jobs=obTasks.jobs;
-alert(JSON.stringify(obTasks));
-localStorage.setItem("Tasks2",JSON.stringify(obTasks))
-
- */
-
-             setUpSels();
+ 
+skey.value="Tasks2";
+selKey(skey.value);
+        //     setUpSels();
 
             function setUpselT() {
             //    alert(trocas.length)
@@ -411,7 +460,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
             function saveLocal() {
 
                 var s = JSON.stringify(obTasks)
-                localStorage.setItem("Tasks2", s);
+                localStorage.setItem(Key, s);
                 var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
                 elocal.value = s;
 
@@ -421,7 +470,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
             function reseteLocal() {
                 if (confirm("Are you sure?, you will loos all local data")) {
                     if (confirm("Ready to reset local...")) {
-                        localStorage.removeItem("Tasks2");
+                        localStorage.removeItem(Key);
                         window.location.reload();
                     }
 
@@ -530,18 +579,18 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 var e;
                 if (select.id = "strocas") e = strocas;
 
-                if (select.id === undefined || select.id === "sprojects" || jobn.value != strocas.value) {
+                if (select.id === undefined || select.id === "sprojects" || isearch.value != strocas.value) {
                     if (confirm("Do you want to add a New Project?")) {
                         if (obTasks.projects === undefined) obTasks.projects = [];
                         //  if(obTasks.projects)
                         var op = {};
-                        op.No = jobn.value;
+                        op.No = isearch.value;
                         op.jobs = [];
                         op.jobs.push(job)
                         projects.push(op)
                         alert("Adicionar nuevo proyecto\n\n" + JSON.stringify(projects));
 
-                        localStorage.setItem("Tasks2", JSON.stringify(obTasks));
+                        localStorage.setItem(Key, JSON.stringify(obTasks));
                         sprojects.onfocus();
 
                         return;
@@ -558,7 +607,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 if (t.jobs === undefined) t.jobs = []
                 t.jobs.push(job);
                 var s = JSON.stringify(obTasks)
-                localStorage.setItem("Tasks2", s);
+                localStorage.setItem(Key, s);
                 elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
                 // addJob(strocas);
                 fecha.value = "";
@@ -594,7 +643,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 if (t.jobs === undefined) t.jobs = []
                 t.jobs.push(job);
                 var s = JSON.stringify(obTasks)
-                localStorage.setItem("Tasks2", s);
+                localStorage.setItem(Key, s);
                 elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
                 // addJob(strocas);
                 fecha.value = "";
@@ -608,7 +657,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
             function showJobDlg() {
                 dcrearj.style.display = "block";
                 dcrearj.insertBefore(dstrocas, dcrearj.firstChild);
-             //   jobn.value = strocas.value;
+             //   isearch.value = strocas.value;
 
             }
 
@@ -616,15 +665,15 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 //  this.job=""
 
                 djobs.innerHTML = "";
-                jobn.value = strocas.value;
+                isearch.value = strocas.value;
                 var o = troca;
                 if (select.id === "sprojects") {
-                    jobn.value = sprojects.value;
+                    isearch.value = sprojects.value;
                     o = project;
 
                 }
 
-                alert(o)
+        //        alert(o)
                 alert(JSON.stringify(troca))
                 tasel.value = JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
                 if (o.jobs != undefined) {
@@ -652,8 +701,8 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                                 job.description = jdescription.value;
 
                                 var s = JSON.stringify(obTasks);
-                                alert(s)
-                                //     localStorage.setItem("Tasks2", s);
+                           //     alert(s)
+                                //     localStorage.setItem(Key, s);
 
                                 selForAdd();
 
@@ -711,7 +760,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
             function selForAdd2(e) {
                 //  this.job=""
                 djobs.innerHTML = "";
-                jobn.value = strocas.value;
+                isearch.value = strocas.value;
                 var o = troca;
                 tasel.value = JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
                 if (o.jobs != undefined) {
@@ -737,7 +786,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                                 job.description = jdescription.value;
 
                                 var s = JSON.stringify(obTasks)
-                                localStorage.setItem("Tasks2", s);
+                                localStorage.setItem(Key, s);
 
                                 selForAdd();
 
@@ -791,9 +840,9 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 if (v === "Show Job Dlg") showJobDlg(strocas);
                  if (v === "Send Backup to Web") sendToWeb();
                  if (v === "Recover Backup from Web") recoverFromWeb();
-                    if (v === "Show Tasks in editor") selKey(key);
-             
-               
+                    if (v === "Show Tasks in editor") elocal.value=localStorage.getItem(Key);
+              if (v === "Set Up Task") dsetupt.style.display="block";
+                 if (v === "Show Actual Task Obj"){elocal.value="Tasks Ctrl:\n"+JSON.stringify(tasksC)+"\n\nActual Task Obj.:\n"+JSON.stringify(obTasks)}          
                
                 if (v === "Reinitiate App"){sctrls.value="Choose an Option"; window.location.reload();}
                
@@ -803,14 +852,14 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
 
 
             function crearJob() {
-                if (jobn.value === undefined || jobn.value === "") {
+                if (isearch.value === undefined || isearch.value === "") {
                     alert("No Job Name found");
                     return;
                 }
                 var dj = new Date().toString().split(":");
                 dj = dj[0] + ":" + dj[1]
                 var job = {};
-                job.name = jobn.value;
+                job.name = isearch.value;
                 job.date = fecha.value;
                 job.created = dj;
                 job.from = from.value;
@@ -819,7 +868,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 if (obTasks.jobs === undefined) obTasks.jobs = []
                 obTasks.jobs.push(job);
 
-                localStorage.setItem("Tasks2", JSON.stringify(obTasks));
+                localStorage.setItem(Key, JSON.stringify(obTasks));
                 djobs.appendChild(crearJobE(job));
                 alert("Job "+job.name+" Created")
             }
@@ -833,7 +882,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
                 p.onclick = function() {
                     ti.innerHTML = this.job.name;
                     ti.ejob = this;
-                    jobn.value = this.job.name;
+                    isearch.value = this.job.name;
                     fecha.value = this.job.date;
                     from.value = this.job.from;
                     to.value = this.job.to;
@@ -844,20 +893,14 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
             }
 
             function setUpSels() {
-                jobs = [];
-                var s = localStorage.getItem("Tasks2");
-               if (s === null) {
-                    obTasks = {};
-                    obTasks.jobs = [];
-                    obTasks.trocas = [];
-                    obTasks.projects = [];
-                } else obTasks = JSON.parse(s);
-
-                trocas = obTasks.trocas;//alert(trocas.length)
+        //////////////////////////////
+        trocas = obTasks.trocas;
               
-                projects = obTasks.projects;
+              projects = obTasks.projects;
 
-                jobs = obTasks.jobs;
+              jobs = obTasks.jobs;
+
+       ///////////////////////////////
 
                 strocas.innerHTML = "<option>Choose a Truck</option>";
                 var o = "";
@@ -913,11 +956,15 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
             }
 
             function search(v) {
+                
+                v=v.toUpperCase();
                 var ar = djobs.children;
                 for (var i = 0; i < ar.length; i++) {
                     var e = ar[i];
-                    if (e.innerHTML.indexOf(v) > -1) e.style.display = 'block';
+                    var es=e.innerHTML.toUpperCase()
+                    if (es.indexOf(v) > -1) e.style.display = 'block';
                     else e.style.display = "none"
+                    if(v==="") e.style.display = "none" 
                 }
             }
 
@@ -965,11 +1012,11 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
             }
 
             function saveObj() {
-                localStorage.setItem("Tasks2", JSON.stringify(obTasks))
+                localStorage.setItem(Key, JSON.stringify(obTasks))
             }
             function selTroca(t){
-                jobn.value=strocas.value;
-                isearch.value=jobn.value;
+                isearch.value=strocas.value;
+                isearch.value=isearch.value;
                 isearch.oninput();
               var o=trocas[strocas.selectedIndex-1];
                 tasel.value= JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
@@ -1082,19 +1129,25 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
 
     }
     function sendToWeb(){
-        if(confirm("Are you sure to send object to Web? It will rewrite it")){
+        GetJ(link,function(obc){
+            alert("This is what is in Web...\n\n"+JSON.stringify(obc));
+                alert("This is what is in Local...\n\n"+localStorage.getItem(Key))
+                elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
+        if(confirm("Are you sure to send object to Web? It will rewrite it, This is what is it in Web:\n\n"+JSON.stringify(obc))){
             UpdateJ(link,obTasks,function(){alert("All done...")});
         }
+    })
     }
     
     function recoverFromWeb(){
               if(confirm("This will load de backup from Web? Confirm next step to rewrite local")){
             GetJ(link,function(ob){
-                alert("All done...\n\n"+JSON.stringify(ob));
-                elocal.value=JSON.stringify(ob);
-                alert("check editor to make sure it will be ok");
+                alert("This is what is in Web...\n\n"+JSON.stringify(ob));
+                alert("This is what is in Local...\n\n"+localStorage.getItem(Key))
+                elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
+                alert("check editor to make sure it will be ok and come back, or proceed in the next step.");
                 if(confirm("Are you sure you want to send it to Local Object?, after that the App will reinitialize")){
-                    localStorage.setItem("Tasks2",elocal.value);
+                    localStorage.setItem(Key,elocal.value);
                     window.location.reload();
                 } 
             
@@ -1104,8 +1157,20 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
         
     }
     function selKey(v){
-        alert(v);
+     //   alert(v);
+        
         elocal.value=localStorage.getItem(v);
+        if(elocal.value!=null) {
+            for(var i=0;i<tasksC.tasks.length;i++){
+                if(tasksC.tasks[i].key===v){
+                    link=tasksC.tasks[i].link;Key=v;
+                    alert("Task "+Key+" Selected\n\n");//+JSON.stringify(tasksC.tasks[i]));
+                    obTasks=JSON.parse(elocal.value);
+                    setUpSels();
+                    return}
+            }
+        }
+        
         
     }
  function selcont(v){
@@ -1114,7 +1179,7 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
     if(v==="Show String"){dcrearj.style.display="none";elocal.style.display="block";elocal.value=repObj(jobs);}
     if(v==="Delete")deletej(ti.ejob);
     if(v==="Clr Note")jdescription.value="";
-    if(v==="Clr All"){jdescription.value="";jobn.value="";from.value=0;to.value=0;}
+    if(v==="Clr All"){jdescription.value="";isearch.value="";from.value=0;to.value=0;}
       if(v==="Close")dcrearj.style.display='none';  
   scont.value="Sel Option"
 
@@ -1125,7 +1190,76 @@ localStorage.setItem("Tasks2",JSON.stringify(obTasks))
   var s=JSON.stringify(ob).replace(/"/g," ").replace(/:/g,": ").replace(/,/g,"\n").replace(/{/g,"\n").replace(/}/g,"\n");
      return s;
  }       
-            
+   function setUpTask(){
+  try{
+    GetJ(ilin.value,function(ob){
+     
+     ttx.value="Local:\n"+localStorage.getItem(ina.value)+"\n\nWeb: \n"+JSON.stringify(ob);
+
+     var ns=JSON.stringify(tasksC);
+  if(ns.indexOf('"key":"'+ina.value+'"')) alert("Already exist, If you choose Process it will overwrite it")
+
+})}
+catch(e){elocal.value=e}
+
+   }     
+   function repLink(){
+       if(confirm("It will replace link of local Task Object, do you wanto to proceed?")){
+       for(var i=0;i<tasksC.tasks.length;i++){
+           var t=tasksC.tasks[i];
+           if(t.key===ina.value) t.link=ilin.value;
+       }
+       if(obTasks.key!=undefined)obTasks.key=ina.value;
+       localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));
+       localStorage.setItem(ina.value,JSON.stringify(obTasks))
+    }
+   }
+   function processNewTask(){
+       link=ilin.value;
+       Key=ina.value;
+       var f=false,t=undefined;
+       for(var i=0;i<tasksC.tasks.length;i++){
+          t=tasksC.tasks[i];
+           if(t.key===Key){
+                f=true;
+                alert("Key already exist, If you choose Process it will overwrite it")
+            if(!confirm("This option will Rewrite the hole object that belogning to "+Key+" key\n\n Do you want to proceed?\n\nOtherwise press cancel, if you want to replace only the link go and press 'Replace Link Only'")) return
+               i=tasksC.tasks.length;
+       }
+    }
+  var ns=JSON.stringify(tasksC);
+ 
+ //alert(ns)
+ 
+   var nt={};
+ 
+   nt.key=Key;
+   nt.link=link;
+    if(!f){ tasksC.tasks.push(nt); localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));}
+
+   obTasks={};
+   obTasks.key=Key;
+   obTasks.jobs = [];
+    obTasks.trocas = [];
+   obTasks.projects = [];
+  
+   
+
+   localStorage.setItem(Key,JSON.stringify(obTasks))
+
+ //  alert(JSON.stringify(obTasks));
+
+//   
+   alert("The local has been setup and link\n\nThe app will restart"+JSON.stringify(tasksC));
+//   alert(localStorage.getItem(Key));// localStorage.setItem(Key,"")
+   window.location.reload();
+ 
+
+   }   
+   function validateObj(variable,object){
+
+   }
+   
         </script>
 
 </head>
