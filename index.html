@@ -1147,7 +1147,7 @@ selKey(skey.value);
                 elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
                 alert("check editor to make sure it will be ok and come back, or proceed in the next step.");
                 if(confirm("Are you sure you want to send it to Local Object?, after that the App will reinitialize")){
-                    localStorage.setItem(Key,elocal.value);
+                    localStorage.setItem(Key,JSON.stringify(ob));
                     window.location.reload();
                 } 
             
@@ -1165,7 +1165,7 @@ selKey(skey.value);
                 if(tasksC.tasks[i].key===v){
                     link=tasksC.tasks[i].link;Key=v;
                     alert("Task "+Key+" Selected\n\n");//+JSON.stringify(tasksC.tasks[i]));
-                    obTasks=JSON.parse(elocal.value);
+                    obTasks=JSON.parse(localStorage.getItem(v));
                     setUpSels();
                     return}
             }
