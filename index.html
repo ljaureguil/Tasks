@@ -248,7 +248,7 @@
         </todo>
         <div id="dcrearj">
           Job/Search:
-            <input id="isearch" style="background:#ffcccc" oninput="search(this.value);">
+            <input id="isearch" style="background:#ffcccc;width: 60%;" oninput="search(this.value);">
                     </input><br>From:
             <input id="from" type="number">To:
             <input id="to" type="number">Date:
@@ -270,7 +270,7 @@
           <option></option>
      
       </select>
-    
+      <button id="mic" onclick="selcont('Add')">Add</button>
             <div id="djobs"></div>
         </div>
 
@@ -348,7 +348,7 @@
         }
 
         jobs = [];
-                var s = localStorage.getItem(Key);alert(s)
+                var s = localStorage.getItem(Key);
                 obTasks = {};
                 //  var s = localStorage.getItem(Key);
                if (s === null) {
@@ -852,7 +852,7 @@ selKey(skey.value);
 
 
             function crearJob() {
-                if (isearch.value === undefined || isearch.value === "") {
+                if (isearch.value === undefined || isearch.value === "" ) {
                     alert("No Job Name found");
                     return;
                 }
@@ -1144,11 +1144,11 @@ selKey(skey.value);
             GetJ(link,function(ob){
                 alert("This is what is in Web...\n\n"+JSON.stringify(ob));
                 alert("This is what is in Local...\n\n"+localStorage.getItem(Key))
-                elocal.value="Local:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
+                elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
                 alert("check editor to make sure it will be ok and come back, or proceed in the next step.");
                 if(confirm("Are you sure you want to send it to Local Object?, after that the App will reinitialize")){
-                    localStorage.setItem(Key,JSON.stringify(ob));
-                  //  window.location.reload();
+                    localStorage.setItem(Key,elocal.value);
+                    window.location.reload();
                 } 
             
             
