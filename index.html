@@ -244,6 +244,7 @@
         <div id="show">
 
             <textarea id="elocal"></textarea>
+             <button onclick="procesTimeCard()" style="position:absolute;bottom: 1%;right:1%;background: red;">Procesar Time Card</button>
         </div>
         </todo>
         <div id="dcrearj">
@@ -322,6 +323,7 @@
       
       </script>
         <script> 
+      //  setTimeout(function(){elocal.value="lauro"},10000)
         fecha.value=new Date().toISOString().substring(0, 10);
         var link='https://jsonblob.com/api/1155945790782169088';
         var tasksC={};//tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1155945790782169088",note:""})
@@ -1259,7 +1261,25 @@ catch(e){elocal.value=e}
    function validateObj(variable,object){
 
    }
-   
+   function procesTimeCard(){
+       var a=elocal.value;
+       if(a[0]!="{"){
+           var ch=String.fromCharCode(9);
+           var t=a.split('\n');//.split(ch)
+           alert(t.length)
+           for(var i=0;i<t.length;i++){
+            var p=t[i].split(ch);
+            t[i]=p;
+          //  alert(p.length)
+
+
+           }
+         //  var t=eval()
+        alert(t)
+       }
+       else alert("Not time card")
+       
+   }
         </script>
 
 </head>
