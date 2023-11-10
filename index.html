@@ -244,7 +244,7 @@
         <div id="show">
 
             <textarea id="elocal"></textarea>
-             <button onclick="procesTimeCard()" style="position:absolute;bottom: 1%;right:1%;background: red;">Procesar Time Card</button>
+             <button onclick="procesTimeCard()" style="position:absolute;bottom: 1%;right:1%;background: red;color:white;">Procesar Time Card</button>
         </div>
         </todo>
         <div id="dcrearj">
@@ -325,7 +325,7 @@
         <script> 
       //  setTimeout(function(){elocal.value="lauro"},10000)
         fecha.value=new Date().toISOString().substring(0, 10);
-        var link='https://jsonblob.com/api/1155945790782169088';
+        var link='https://jsonblob.com/api/1172639130273570816';//1172639130273570816;//1155945790782169088';
         var tasksC={};//tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1155945790782169088",note:""})
         var tasksCs=localStorage.getItem("tasksCtrl");
         var ob={};
@@ -341,7 +341,7 @@
         }
         if(tasksC.tasks.length===0){ 
             tasksC.tasks=[]
-            tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1155945790782169088",note:""})}
+            tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1172639130273570816",note:""})}
         var Key=tasksC.tasks[0].key;skey.value=Key;
         skey.innerHTML="<option>Sel Key</option>";
    //     alert(JSON.stringify(tasksC))
@@ -1159,15 +1159,16 @@ selKey(skey.value);
         
     }
     function selKey(v){
-     //   alert(v);
-        
-        elocal.value=localStorage.getItem(v);
+ 
         if(elocal.value!=null) {
             for(var i=0;i<tasksC.tasks.length;i++){
                 if(tasksC.tasks[i].key===v){
                     link=tasksC.tasks[i].link;Key=v;
                     alert("Task "+Key+" Selected\n\n");//+JSON.stringify(tasksC.tasks[i]));
                     obTasks=JSON.parse(localStorage.getItem(v));
+                 //   delete obTasks.jobs
+                 //   obTasks.jobs=[];
+                    elocal.value=JSON.stringify(obTasks);
                     setUpSels();
                     return}
             }
@@ -1262,24 +1263,92 @@ catch(e){elocal.value=e}
 
    }
    function procesTimeCard(){
-       var a=elocal.value;
+       var a=elocal.value,week="";
+       
        if(a[0]!="{"){
+           var jobs=[];
            var ch=String.fromCharCode(9);
-           var t=a.split('\n');//.split(ch)
-           alert(t.length)
-           for(var i=0;i<t.length;i++){
-            var p=t[i].split(ch);
-            t[i]=p;
-          //  alert(p.length)
+           var w=a.split("Date")
+          
+          var d=w[1].split("Total Daily:");
+           var ww=w[0].split("\n");
+          for(var ii=0;ii<ww.length;ii++){
+          if(ww[ii].toUpperCase().indexOf("MECHANIC NAME")>-1){
+              week=ww[ii].split(ch)[5];
+             }
+        }
 
+         for(var i=0;i<d.length;i++){jobs.push(
+              processday(d[i],week)) 
+            };
 
-           }
-         //  var t=eval()
-        alert(t)
+         elocal.value=JSON.stringify(obTasks);
+         if(confirm("Do you want to Save changes to ObTasks.jobs?...")){
+saveObj();
+setUpSels();
+
+         } 
        }
        else alert("Not time card")
        
    }
+  function processday(day,week){
+
+         var fe="",arjo=[];
+      var ch=String.fromCharCode(9);
+      var lns=day.split("\n");//alert(lns)
+       for(var i=0;i<lns.length;i++){
+           if(lns[i].indexOf(ch+"OUT"+ch)>-1){
+        //   alert("linea "+i+"   "+lns[i])
+         var job={}, jo={};
+         var c=lns[i].split(ch);
+         jo.name=c[0];
+         jo.date=c[8];
+         if(jo.date!=undefined && jo.date.indexOf("2")>-1) fe=jo.date;
+         else jo.date=fe;
+         jo.description=c[1];
+         jo.to=c[7]*1;
+         if(lns[i+1]===undefined);//alert(i);
+         else{
+         cd=lns[i+1].split(ch);
+         jo.from=cd[7]*1;
+         }
+i++;
+        if(isNaN(jo.to) || jo.to===0 || jo.from===0 || isNaN(jo.from)) jo={};
+        else{
+            if(jo.name===undefined  || jo.name===" ") jo.name=jo.description.split(" ")[0].replace(/,/g,"");
+            if(jo.date!=undefined && jo.date)
+            jo.hours=jo.to-jo.from;
+            jo.week=week;
+             arjo.push(jo);
+             if(obTasks.jobs===undefined) obTasks.jobs=[jo];
+            verifyJob(jo,function(ind){
+             if(ind===-1) obTasks.jobs.push(jo);
+             else {
+                if(confirm(jo.name+" Already Exist, Do you want to replace it?")){ obTasks.jobs[ind]};
+
+             }
+  })
+        }
+            }
+    }
+    
+    return arjo;
+
+  }
+  function verifyJob(job,callback){
+      var a=obTasks.jobs;
+      var i=0;
+      if(callback!=undefined){
+        //  alert(callback)
+      for(i=0;i<a.length;i++){
+          var j=a[i];
+          if(j.week===job.week && j.date===job.date && j.to===job.to && j.from===job.from) callback(i);
+        
+      }
+      if(i>-1)callback(-1)
+    }
+  }
         </script>
 
 </head>
