@@ -169,7 +169,7 @@
                 </select>
                 <select id="stype" oninput="" class="">
                     <option>Type?</option>
-                    <option>FL</option>
+                    <option>FL</option> 
                     <option>SL</option>
                     <option>RL</option>
                     <option>RO</option>
@@ -383,8 +383,10 @@
             obTasks.projects = [];
             obTasks.jobs = []
             var trocas = [], projects=[], troca="", project="", select="",jobs=[];
+            var tsk=localStorage.getItem("lastT");
  
-skey.value="Tasks2";
+ if(tsk===null) skey.value="Tasks2";
+ else skey.value=tsk;
 selKey(skey.value);
         //     setUpSels();
 
@@ -1165,6 +1167,10 @@ selKey(skey.value);
                 if(tasksC.tasks[i].key===v){
                     link=tasksC.tasks[i].link;Key=v;
                     alert("Task "+Key+" Selected\n\n");//+JSON.stringify(tasksC.tasks[i]));
+                    localStorage.setItem("lastT",Key);
+                  //  alert(localStorage.getItem("lastT"))
+                    ina.value=v;
+                    ilin.value=link;
                     obTasks=JSON.parse(localStorage.getItem(v));
                  //   delete obTasks.jobs
                  //   obTasks.jobs=[];
