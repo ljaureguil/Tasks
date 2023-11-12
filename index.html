@@ -87,7 +87,8 @@
         #tasel {
             width: 100%;
             height: 8%;
-            font-size: 8px;
+            font-size: 12px;
+            color:red;
         }
         #jdescription{
                     width: 100%;
@@ -251,7 +252,7 @@
         </todo>
         <div id="dcrearj">
           Job/Search:
-            <input id="isearch" style="background:#ffcccc;width: 60%;" oninput="search(this.value);">
+            <input id="isearch" style="background:#ffcccc;width: 40%;" oninput="search(this.value);"><button onclick="resumen()">Hrs?</button>
                     </input><br>From:
             <input id="from" type="number">To:
             <input id="to" type="number">Date:
@@ -325,6 +326,7 @@
       
       </script>
         <script> 
+       var horasac=0;
       //  setTimeout(function(){elocal.value="lauro"},10000)
         fecha.value=new Date().toISOString().substring(0, 10);
         var link='https://jsonblob.com/api/1172639130273570816';//1172639130273570816;//1155945790782169088';
@@ -965,16 +967,18 @@ selKey(skey.value);
             }
 
             function search(v) {
-                
+                horasac=0;
                 v=v.toUpperCase();
                 var ar = djobs.children;
-                for (var i = 0; i < ar.length; i++) {
+                  for (var i = 0; i < ar.length; i++) {
                     var e = ar[i];
                     var es=e.innerHTML.toUpperCase()
-                    if (es.indexOf(v) > -1) e.style.display = 'block';
+                    if (es.indexOf(v) > -1){ e.style.display = 'block';horasac+=e.job.hours;}
                     else e.style.display = "none"
                     if(v==="") e.style.display = "none" 
                 }
+                tasel.value="Total de Horas en este trabajo: "+horasac;
+  
             }
 
             function deletej(e) {
@@ -1396,6 +1400,10 @@ i++;
 
      localStorage.setItem(Key,JSON.stringify(obTasks));
      window.location.reload();
+
+  }
+  function resumen(){
+
 
   }
         </script>
