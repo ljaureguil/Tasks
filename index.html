@@ -253,7 +253,7 @@
         <div id="dcrearj">
           Job/Search:
             <input id="isearch" style="background:#ffcccc;width: 40%;" oninput="search(this.value);">
-               <select id="sweek" oninput="selWeek(this.value)" style="width:15%;">
+            <select id="sweek" oninput="selWeek(this.value)" style="width:15%;">
                 <option>W?</option>
             
             </select>
@@ -581,17 +581,31 @@ selKey(skey.value);
 
             function createJob() {
 
-                var dj = new Date().toString().split(":");
-                dj = dj[0] + ":" + dj[1]
+             //   var dj = new Date().toString().split(":");
+             //   dj = dj[0] + ":" + dj[1]
 
                 var job = {};//name
-                job.date = fecha.value;
-               alert(fecha.value);
-                return;
+             //   job.date = fecha.value;
+             //  alert(fecha.value);
+             //   return;
                // job.created = dj;
-                job.from = from.value;
-                job.to = to.value;
-                job.description = jdescription.value;
+              //  job.from = from.value;
+               // job.to = to.value;
+               // job.description = jdescription.value;
+                var w=prompt("Week? ","Aug 23 to Aug 29 (2023)");
+                if(w===null){alert("Week is required, try to add again.");return;};
+                if(!confirm("Add this week?? "+w+"\n\nOk to continue...")) return;
+                
+               job= {
+                   "name":isearch.value,
+                   "date":fecha.value,
+                   "description":jdescription.value,
+                   "to":to.value,
+                   "from":from.value,
+                   "hours":to.value-from.value,
+                   "week":w
+                }
+
                 var e;
                 if (select.id = "strocas") e = strocas;
 
@@ -869,24 +883,45 @@ selKey(skey.value);
 
             function crearJob() {
                 if (isearch.value === undefined || isearch.value === "" ) {
-                    alert("No Job Name found");
+                    alert("No Job Name found or not selected");
                     return;
                 }
-                var dj = new Date().toString().split(":");
-                dj = dj[0] + ":" + dj[1]
+            //    var dj = new Date().toString().split(":");
+            //    dj = dj[0] + ":" + dj[1]
                 var job = {};
-                job.name = isearch.value;
-                job.date = fecha.value;
-                job.created = dj;
-                job.from = from.value;
-                job.to = to.value;
-                job.description = jdescription.value;
+              //  job.name = isearch.value;
+               // job.date = fecha.value;
+               // job.created = dj;
+             //   job.from = from.value;
+             //   job.to = to.value;
+              //  job.description = jdescription.value;
+
+                var w=prompt("Week? ","Aug 23 to Aug 29 (2023)");
+                if(w===null){alert("Week is required, try to add again.");return;};
+                if(!confirm("Add this week... (example)? "+w+"\n\nOk to continue...")) return;
+                
+               job= {
+                   "name":isearch.value,
+                   "date":fecha.value,
+                   "description":jdescription.value,
+                   "to":to.value,
+                   "from":from.value,
+                   "hours":to.value-from.value,
+                   "week":w
+                }
+
+                verifyJob(job,function(res){
+                        alert(JSON.stringify(res))
+                    })                 
                 if (obTasks.jobs === undefined) obTasks.jobs = []
                 obTasks.jobs.push(job);
 
                 localStorage.setItem(Key, JSON.stringify(obTasks));
                 djobs.appendChild(crearJobE(job));
-                alert("Job "+job.name+" Created")
+                alert("Job "+job.name+" Created...")
+
+
+
             }
 
             function crearJobE(job) {
@@ -1011,20 +1046,32 @@ selKey(skey.value);
                 if (confirm("Are you sure you want to Update Job " + j.name + "?")) {
                   //  alert(obTasks.jobs[j])
                     var ind = indexOfJob(jobs, e.job.name);
+ 
+
+
                     if (ind > -1) {
+  
+
+
                         j.date = fecha.value;
                         j.from = from.value;
                         j.to = to.value;
                         j.description = jdescription.value;
 
-                        var dj = new Date().toString().split(":");
-                        dj = dj[0] + ":" + dj[1]
-                        j.created = dj;
+                      //  var dj = new Date().toString().split(":");
+                      //  dj = dj[0] + ":" + dj[1]
+                      //  j.created = dj;
 
                         alert("Job " +j.name+" Updated");
                  //      var jj = JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
                             e.innerHTML=JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
-                        saveObj();
+  
+                            verifyJob(j,function(res){
+                        alert(JSON.stringify(res))
+                    })                 
+                       
+                       
+                            saveObj();
                     } else alert("Job not found")
                 }
 
