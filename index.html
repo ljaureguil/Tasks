@@ -252,7 +252,11 @@
         </todo>
         <div id="dcrearj">
           Job/Search:
-            <input id="isearch" style="background:#ffcccc;width: 40%;" oninput="search(this.value);"><button onclick="resumen()">Hrs?</button>
+            <input id="isearch" style="background:#ffcccc;width: 40%;" oninput="search(this.value);">
+            <select id="sweek" oninput="selWeek(this.value)";style="width:20%;">
+                <option>Choose a Week</option>
+            
+            </select>
                     </input><br>From:
             <input id="from" type="number">To:
             <input id="to" type="number">Date:
@@ -326,6 +330,7 @@
       
       </script>
         <script> 
+        sweek.ar=[];
        var horasac=0;
       //  setTimeout(function(){elocal.value="lauro"},10000)
         fecha.value=new Date().toISOString().substring(0, 10);
@@ -928,6 +933,7 @@ selKey(skey.value);
             
                 for (var i = 0; i < jobs.length; i++) {
                     djobs.appendChild(crearJobE(jobs[i]));
+                    addWeek(jobs[i].week)
                   if(sproyectos.innerHTML.indexOf(">"+jobs[i].name+"<")===-1)  sproyectos.innerHTML+="<option>"+jobs[i].name+"</option>";
                 
                   
@@ -1350,7 +1356,7 @@ setUpSels();
 i++;
         if(isNaN(jo.to) || jo.to===0 || jo.from===0 || isNaN(jo.from)) jo={};
         else{
-            if(jo.name===undefined  || jo.name===" ") jo.name=jo.description.split(" ")[0].replace(/,/g,"");
+            if(jo.name===undefined  || jo.name===" " || jo.name==="") jo.name=jo.description.split(" ")[0].replace(/,/g,"");
             if(jo.date!=undefined && jo.date)
             jo.hours=jo.to-jo.from;
             jo.week=week;
@@ -1362,7 +1368,7 @@ i++;
              if(res.result==='missing') obTasks.jobs.push(jo);
              else {
                  var obs=JSON.stringify(res).replace(/"jobIn":/g,"\n\njobIn").replace(/"jobComing":/g,"\n\njobComing");
-                 alert(obs); 
+               //  alert(obs); 
                  if(confirm("tThe job already exist or time is overlaping, check if it is right press ok\n\n"+obs)){ obTasks.jobs[res.index]};
              //   if(confirm(jo.name+" Already Exist, Do you want to replace it?")){ obTasks.jobs[ind]};
 
@@ -1387,9 +1393,9 @@ i++;
               var t0=job.to, f0=job.from,t1=j.to, f1=j.from;
 
  
-              if(f1>f0 && f1<t0 || f0>f1 && f0<t1) callback({result:"overlaping",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});
+              if(f1>f0 && f1<t0 || f0>f1 && f0<t1){ callback({result:"overlaping",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});return;}
               else{
-                if(f1===f0 && t1===t0) callback({result:"found",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});
+                if(f1===f0 && t1===t0){ callback({result:"found",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});return;}
               }
           } ;
        }
@@ -1415,10 +1421,24 @@ i++;
      window.location.reload();
 
   }
-  function resumen(){
+  function selWeek(v){
+   //   alert(v);
+      isearch.value=v
+      search(v);
+     // search(v);
 
 
   }
+  function addWeek(w){
+      var ws=sweek.ar;
+
+          if(ws.indexOf(w)===-1){
+              ws.push(w);
+              sweek.innerHTML+="<option>"+w+"</option>"
+
+
+          }
+ }
         </script>
 
 </head>
