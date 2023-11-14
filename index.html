@@ -1356,10 +1356,15 @@ i++;
             jo.week=week;
              arjo.push(jo);
              if(obTasks.jobs===undefined) obTasks.jobs=[jo];
-            verifyJob(jo,function(ind){
-             if(ind===-1) obTasks.jobs.push(jo);
+            verifyJob(jo,function(res){
+
+
+             if(res.result==='missing') obTasks.jobs.push(jo);
              else {
-                if(confirm(jo.name+" Already Exist, Do you want to replace it?")){ obTasks.jobs[ind]};
+                 var obs=JSON.stringify(res).replace(/"jobIn":/g,"\n\njobIn").replace(/"jobComing":/g,"\n\njobComing");
+                 alert(obs); 
+                 if(confirm("tThe job already exist or time is overlaping, check if it is right press ok\n\n"+obs)){ obTasks.jobs[res.index]};
+             //   if(confirm(jo.name+" Already Exist, Do you want to replace it?")){ obTasks.jobs[ind]};
 
              }
   })
@@ -1377,10 +1382,18 @@ i++;
         //  alert(callback)
       for(i=0;i<a.length;i++){
           var j=a[i];
-          if(j.week===job.week && j.date===job.date && j.to===job.to && j.from===job.from) callback(i);
-        
-      }
-      if(i>-1)callback(-1)
+          if(j.week===job.week && j.date===job.date){
+
+              var t0=job.to, f0=job.from,t1=j.to, f1=j.from;
+
+ 
+              if(f1>f0 && f1<t0 || f0>f1 && f0<t1) callback({result:"overlaping",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});
+              else{
+                if(f1===f0 && t1===t0) callback({result:"found",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});
+              }
+          } ;
+       }
+      if(i==a.length) callback({result:"missing",index:-1,jobIn:{},jobComing:job});
     }
   }
  
