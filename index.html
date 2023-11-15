@@ -220,18 +220,13 @@
                     </select>
                     
                     <button onclick="isearch.value=strocas.value;isearch.value=isearch.value;isearch.oninput();//selForAdd();">Sel</button> 
-                    <select id="sproyectos" oninput="isearch.value=this.value;search(this.value)">
-                        <option>Sel a Project</option>
+                    <select id="sproyectos" oninput="isearch.value=this.value;search(this.value)" style="width: 15%;">
+                        <option>Pr?</option>
                     
                     </select>
                     <textarea id="tasel"></textarea>
                     <span id="ti" style="display:none;color:red;font-size:8px;padding:2px;margin-left: 30px;border-style: solid;border-color: rgb(9, 84, 204);"></span>
  
-                    
- 
-                    
-                    
-                    
                     
                 </div>
 
@@ -964,7 +959,7 @@ selKey(skey.value);
  
 
                 djobs.innerHTML = "";
-                sproyectos.innerHTML="<option>Sel project</option>";
+                sproyectos.innerHTML="<option>Pr?</option>";
             
                 for (var i = 0; i < jobs.length; i++) {
                     djobs.appendChild(crearJobE(jobs[i]));
