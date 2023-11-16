@@ -269,9 +269,9 @@
        <option>Show String</option>
                <option>Close</option> 
         <option></option>
-        <option>Delete</option>
+        <option>Delete J</option>
           <option></option>
-     
+          <option>Delete W</option>   
       </select>
       <button id="mic" onclick="selcont('Add')">Add</button>
             <div id="djobs"></div>
@@ -480,7 +480,7 @@ selKey(skey.value);
                 if (confirm("Are you sure?, you will loos all local data")) {
                     if (confirm("Ready to reset local...")) {
                         localStorage.removeItem(Key);
-                        window.location.reload();
+                        setTimeout(function(){window.location.reload()},1000)
                     }
 
                 }
@@ -869,7 +869,7 @@ selKey(skey.value);
               if (v === "Set Up Task") dsetupt.style.display="block";
                  if (v === "Show Actual Task Obj"){elocal.value="Tasks Ctrl:\n"+JSON.stringify(tasksC)+"\n\nActual Task Obj.:\n"+JSON.stringify(obTasks)}          
                
-                if (v === "Reinitiate App"){sctrls.value="Choose an Option"; window.location.reload();}
+                if (v === "Reinitiate App"){sctrls.value="Choose an Option";  setTimeout(function(){window.location.reload()},1000);}
                
                 sctrls.value="Choose an Option";
 
@@ -1209,7 +1209,7 @@ selKey(skey.value);
                 alert("check editor to make sure it will be ok and come back, or proceed in the next step.");
                 if(confirm("Are you sure you want to send it to Local Object?, after that the App will reinitialize")){
                     localStorage.setItem(Key,JSON.stringify(ob));
-                    window.location.reload();
+                    setTimeout(function(){window.location.reload()},1000)
                 } 
             
             
@@ -1243,7 +1243,8 @@ selKey(skey.value);
     if(v==="Add")crearJob();
     if(v==="Update")updatej(ti.ejob);
     if(v==="Show String"){dcrearj.style.display="none";elocal.style.display="block";elocal.value=repObj(jobs);}
-    if(v==="Delete")deletej(ti.ejob);
+    if(v==="Delete J")deletej(ti.ejob);
+    if(v==="Delete W")deleteW();
     if(v==="Clr Note")jdescription.value="";
     if(v==="Clr All"){jdescription.value="";isearch.value="";from.value=0;to.value=0;}
       if(v==="Close")dcrearj.style.display='none';  
@@ -1318,7 +1319,7 @@ catch(e){elocal.value=e}
 //   
    alert("The local has been setup and link\n\nThe app will restart"+JSON.stringify(tasksC));
 //   alert(localStorage.getItem(Key));// localStorage.setItem(Key,"")
-   window.location.reload();
+setTimeout(function(){window.location.reload()},1000)
  
 
    }   
@@ -1348,7 +1349,8 @@ catch(e){elocal.value=e}
          elocal.value=JSON.stringify(obTasks);
          if(confirm("Do you want to Save changes to ObTasks.jobs?...")){
 saveObj();
-setUpSels();
+//setUpSels();
+setTimeout(function(){window.location.reload()},1000);
 
          } 
        }
@@ -1384,6 +1386,9 @@ setUpSels();
          var job={}, jo={};
          var c=lns[i].split(ch);
          jo.name=c[0];
+         if(jo.name===undefined || jo.name===" " ||jo.name.length<2){
+             jo.name=c[1].split(" ")[0];
+         }
          jo.date=formatFe(c[8]);
          if(jo.date!=undefined && jo.date.indexOf("2")>-1) fe=jo.date;
          else jo.date=fe;
@@ -1411,7 +1416,14 @@ i++;
              else {
                  var obs=JSON.stringify(res).replace(/"jobIn":/g,"\n\njobIn").replace(/"jobComing":/g,"\n\njobComing");
                //  alert(obs); 
-                 if(confirm("tThe job already exist or time is overlaping, check if it is right press ok\n\n"+obs)){ obTasks.jobs[res.index]};
+                 if(confirm("tThe job already exist or time is overlaping, check if it is right press ok\n\n"+obs)){
+                     
+                      if(confirm("Replace it anyway?...\n\n"+obs)){ obTasks.jobs[res.index]=jo;     }
+               
+                
+                
+                };
+
              //   if(confirm(jo.name+" Already Exist, Do you want to replace it?")){ obTasks.jobs[ind]};
 
              }
@@ -1460,7 +1472,7 @@ i++;
      elocal.value=JSON.stringify(obTasks);
 
      localStorage.setItem(Key,JSON.stringify(obTasks));
-     window.location.reload();
+     setTimeout(function(){window.location.reload()},1000)
 
   }
   function selWeek(v){
@@ -1481,6 +1493,26 @@ i++;
 
           }
  }
+ function deleteW(){
+     var w=sweek.value;
+     if(w==="W?") {alert("Choos a Week");retunr; }
+     else{
+         if(confirm("Are you sure you want to delete the whole week?"+"\n\n"+w)){
+         var js=obTasks.jobs;
+         alert(js.length)
+         for(var i=0;i<js.length;i++){
+             if(js[i].week===w){ js.splice(i,1);i--;}
+         }
+         if(confirm("All done, do you want to Save Changes to local Object?")){
+          
+              saveObj(); 
+               alert(obTasks.jobs.length);
+              setTimeout(function(){window.location.reload()},1000)
+        }
+     }
+
+ }
+}
         </script>
 
 </head>
