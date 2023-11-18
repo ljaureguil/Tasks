@@ -143,7 +143,7 @@
                 <option></option>
                 <option>Send Editor to Web Literal</option>               
             </select>
-            <select id="skey" oninput="selKey(this.value)">
+            <select id="skey" oninput="selKey(this.value);setTimeout(function(){window.location.reload()},100)">
             <option>Sel Key</option>
              <option>Tasks2</option>
             <option></option>
@@ -394,6 +394,8 @@
  if(tsk===null) skey.value="Tasks2";
  else skey.value=tsk;
 selKey(skey.value);
+
+ 
         //     setUpSels();
 
             function setUpselT() {
@@ -1229,8 +1231,11 @@ selKey(skey.value);
                  //   delete obTasks.jobs
                  //   obTasks.jobs=[];
                     elocal.value=JSON.stringify(obTasks);
+                    i=tasksC.tasks.length
+                 //   setTimeout(function(){window.location.reload()},1000)
+
                     setUpSels();
-                    return}
+                    }
             }
         }
         
@@ -1507,15 +1512,15 @@ i++;
 
 function SendEditorWeb(){
 
-    if(confirm("Are you sure you want to send it to Web?")){
-     //   GetJ(link,function(obc){
-      //      alert("This is what is in Web ("+link+")...\n\n"+JSON.stringify(obc));
-      //          alert("This is what is in Editor...\n\n"+elocal.value);
-                
-       // if(confirm("Are you sure to send object to Web ("+link+")? It will rewrite it all, This is what is it in Web:\n\n"+JSON.stringify(obc))){
-      //      UpdateJ(link,obTasks,function(){alert("All done...");elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);});
-       // }
-   // })
+    if(confirm("Are you sure you want to send it to Web ("+link+")?\n\n**Make sure is an Json Object")){
+GetJ(link,function(obc){
+     if(confirm("This is what is in Web, Press OK to Procceed.\n\n"+JSON.stringify(obc)))
+        UpdateJ(link,JSON.parse(elocal.value),function(){
+            alert("All done...\n\n**To load it to the app you have to choose 'Recover Backup from Web' option from menu.");
+            
+        });
+
+})
     }
 }
 
