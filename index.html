@@ -126,7 +126,7 @@
     </style>
     <div id="todo">
         <div id="ctrls">
-            <select id="sctrls" oninput="dosctrls(this.value)">\
+            <select id="sctrls" oninput="dosctrls(this.value)" style="width: 60%;">\
                 <option>Choose an Option</Option>
                 </option>
                 <option>Show Trucks Dlg</option>
@@ -140,7 +140,8 @@
                               <option></option>
                 <option>Send Backup to Web</option>
                 <option>Recover Backup from Web</option>
-                
+                <option></option>
+                <option>Send Editor to Web Literal</option>               
             </select>
             <select id="skey" oninput="selKey(this.value)">
             <option>Sel Key</option>
@@ -396,15 +397,10 @@ selKey(skey.value);
         //     setUpSels();
 
             function setUpselT() {
-            //    alert(trocas.length)
-          //      strocas.innerHTML = "<option>Choose a Truck</option>";
-            //    var o = "";
-            //    for (var i = 0; i < trocas.length; i++) {
-             //       o += "<option >" + trocas[i].No + "</option>";
-              //  }
+              }
 
-            }
 
+              
             function validateTk(n) {
                 for (var i = 0; i < trocas.length; i++) {
                     if (trocas[i].No === n) return i;
@@ -865,6 +861,7 @@ selKey(skey.value);
                 if (v === "Show Job Dlg") showJobDlg(strocas);
                  if (v === "Send Backup to Web") sendToWeb();
                  if (v === "Recover Backup from Web") recoverFromWeb();
+                 if (v === "Send Editor to Web Literal") SendEditorWeb();                
                     if (v === "Show Tasks in editor") elocal.value=localStorage.getItem(Key);
               if (v === "Set Up Task") dsetupt.style.display="block";
                  if (v === "Show Actual Task Obj"){elocal.value="Tasks Ctrl:\n"+JSON.stringify(tasksC)+"\n\nActual Task Obj.:\n"+JSON.stringify(obTasks)}          
@@ -1191,11 +1188,11 @@ selKey(skey.value);
     }
     function sendToWeb(){
         GetJ(link,function(obc){
-            alert("This is what is in Web...\n\n"+JSON.stringify(obc));
+            alert("This is what is in Web ("+link+")...\n\n"+JSON.stringify(obc));
                 alert("This is what is in Local...\n\n"+localStorage.getItem(Key))
-                elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
-        if(confirm("Are you sure to send object to Web? It will rewrite it, This is what is it in Web:\n\n"+JSON.stringify(obc))){
-            UpdateJ(link,obTasks,function(){alert("All done...")});
+                
+        if(confirm("Are you sure to send object to Web ("+link+")? It will rewrite it, This is what is it in Web:\n\n"+JSON.stringify(obc))){
+            UpdateJ(link,obTasks,function(){alert("All done...");elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);});
         }
     })
     }
@@ -1264,7 +1261,7 @@ selKey(skey.value);
      ttx.value="Local:\n"+localStorage.getItem(ina.value)+"\n\nWeb: \n"+JSON.stringify(ob);
 
      var ns=JSON.stringify(tasksC);
-  if(ns.indexOf('"key":"'+ina.value+'"')) alert("Already exist, If you choose Process it will overwrite it")
+  if(ns.indexOf('"key":"'+ina.value+'"')>-1) alert("Already exist, If you choose Process it will overwrite it")
 
 })}
 catch(e){elocal.value=e}
@@ -1290,7 +1287,7 @@ catch(e){elocal.value=e}
            if(t.key===Key){
                 f=true;
                 alert("Key already exist, If you choose Process it will overwrite it")
-            if(!confirm("This option will Rewrite the hole object that belogning to "+Key+" key\n\n Do you want to proceed?\n\nOtherwise press cancel, if you want to replace only the link go and press 'Replace Link Only'")) return
+            if(!confirm("This option will Rewrite localy object that belogning to "+Key+" key\n\n Do you want to proceed?\n\nOtherwise press cancel, if you want to replace only the link go and press 'Replace Link Only'")) return
                i=tasksC.tasks.length;
        }
     }
@@ -1309,14 +1306,8 @@ catch(e){elocal.value=e}
    obTasks.jobs = [];
     obTasks.trocas = [];
    obTasks.projects = [];
-  
-   
-
-   localStorage.setItem(Key,JSON.stringify(obTasks))
-
- //  alert(JSON.stringify(obTasks));
-
-//   
+   if(!confirm("This will be saved locally, press OK to continue\n\n"+JSON.stringify(obTasks))) return;
+    localStorage.setItem(Key,JSON.stringify(obTasks))
    alert("The local has been setup and link\n\nThe app will restart"+JSON.stringify(tasksC));
 //   alert(localStorage.getItem(Key));// localStorage.setItem(Key,"")
 setTimeout(function(){window.location.reload()},1000)
@@ -1513,6 +1504,21 @@ i++;
 
  }
 }
+
+function SendEditorWeb(){
+
+    if(confirm("Are you sure you want to send it to Web?")){
+     //   GetJ(link,function(obc){
+      //      alert("This is what is in Web ("+link+")...\n\n"+JSON.stringify(obc));
+      //          alert("This is what is in Editor...\n\n"+elocal.value);
+                
+       // if(confirm("Are you sure to send object to Web ("+link+")? It will rewrite it all, This is what is it in Web:\n\n"+JSON.stringify(obc))){
+      //      UpdateJ(link,obTasks,function(){alert("All done...");elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);});
+       // }
+   // })
+    }
+}
+
         </script>
 
 </head>
