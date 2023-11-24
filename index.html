@@ -1041,7 +1041,8 @@ selKey(skey.value);
                
                 if(confirm("Job name: "+e.job.name+" will be changed to: "+n+"\n\nDo you want to procced?")){
                      e.job.name=n;
-                     alert(JSON.stringify(e.job))
+                     alert(JSON.stringify(e.job));
+                     e.innerHTML=JSON.stringify(e.job).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
                      saveObj(); 
                 }  
 
