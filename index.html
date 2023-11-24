@@ -264,11 +264,11 @@
             <option>Sel Option</option>   
         <option>Add</option>
         <option>Update</option>
- 
+        <option>Change Job Name</option>
         <option>Clr Note</option>
        <option>Clr All</option>
        <option>Show String</option>
-               <option>Close</option> 
+        <option>Close</option> 
         <option></option>
         <option>Delete J</option>
           <option></option>
@@ -1034,33 +1034,35 @@ selKey(skey.value);
 
             }
 
+            function replaceName(e){
+                if(e===undefined){alert("Job no Exist");return}
+                var n=prompt("Actual Job Name: "+e.job.name+"\n\nType new name","new name");
+                if(n==null || n==="new name") {alert("Type a valid name");return}        
+               
+                if(confirm("Job name: "+e.job.name+" will be changed to: "+n+"\n\nDo you want to procced?")){
+                     e.job.name=n;
+                     alert(JSON.stringify(e.job))
+                     saveObj(); 
+                }  
+
+    
+            }
+
             function updatej(e) {
                 if(e===undefined){alert("Job no Exist");return}
                 var j = e.job;
                 if (confirm("Are you sure you want to Update Job " + j.name + "?")) {
                   //  alert(obTasks.jobs[j])
                     var ind = indexOfJob(jobs, e.job.name);
- 
-
-
-                    if (ind > -1) {
-  
-
-
-                        j.date = fecha.value;
+                     if (ind > -1) {
+                         j.date = fecha.value;
                         j.from = from.value;
                         j.to = to.value;
                         j.description = jdescription.value;
 
-                      //  var dj = new Date().toString().split(":");
-                      //  dj = dj[0] + ":" + dj[1]
-                      //  j.created = dj;
-
-                        alert("Job " +j.name+" Updated");
-                 //      var jj = JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                         alert("Job " +j.name+" Updated");
                             e.innerHTML=JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
-  
-                            verifyJob(j,function(res){
+                             verifyJob(j,function(res){
                         alert(JSON.stringify(res))
                     })                 
                        
@@ -1244,6 +1246,7 @@ selKey(skey.value);
  function selcont(v){
     if(v==="Add")crearJob();
     if(v==="Update")updatej(ti.ejob);
+       if(v==="Change Job Name")replaceName(ti.ejob);
     if(v==="Show String"){dcrearj.style.display="none";elocal.style.display="block";elocal.value=repObj(jobs);}
     if(v==="Delete J")deletej(ti.ejob);
     if(v==="Delete W")deleteW();
