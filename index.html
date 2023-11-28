@@ -1,6 +1,1569 @@
 <html>
 
+<head><html>
+
 <head>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/9785/9785466.png">
+    <title>Task Notes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <style>
+        body {
+            background: white;
+            font-size: 18px;
+        }
+        input {
+            width: 100px;
+            margin: 10px;
+            font-size: 18px;
+            background: #77ee77;
+        }
+        select {
+            margin: 10px;
+            font-size: 18px;
+            background: #77ee77;
+        }
+        button {
+            margin: 10px;
+            font-size: 16px;
+        }
+        #todoTk {
+            width: 100%;
+            display: none;
+        }
+        #elocal {
+            width: 95%;
+            height: 50%;
+            position: absolute;
+            right: 2%;
+            bottom: 1%;
+        }
+        #dintdata {
+            border-style: double;
+        }
+        #dadjob {
+            // position: absolute;
+            // top: 5%;
+            border-style: double;
+        }
+        #dcrearj {
+            position: absolute;
+            top: 10%;
+            border-style: double;
+            position: absolute;
+            bottom: 2%;
+            left: 5%;
+            width: 90%;
+            height: 75%;
+            background: rgba(255, 255, 255, 1);
+            display: none;
+        }
+        #djobs {
+            color: white;
+            width: 100%;
+            height: 60%;
+            overflow: auto;
+            background-color: orange;
+        }
+        .cj {
+            color: black;
+            border-style: solid;
+            width: 96%;
+            border-radius: 10px;
+            background-color: honeydew;
+            font-size: 14px;
+            margin: 6px;
+        }
+        .cbj {
+            color: white;
+            border-radius: 100px;
+            background-color: red;
+        }
+        #dsctrocas {
+            border-style: solid;
+            background-color: red;
+            width: 100%;
+            height: 300px;
+        }
+        #tasel {
+            width: 100%;
+            height: 8%;
+            font-size: 12px;
+            color:red;
+        }
+        #jdescription{
+                    width: 100%;
+            height: 8%;
+         //   font-size: 4px;  
+        }
+     #temp{
+         background-color: cornsilk;
+        position: absolute;
+        width: 60%;;
+        height: 20%;
+        top:30%;
+        left: 20%;
+        display: none;
+        padding: 10px;
+        border-style:double;
+        border-radius:8px;
+        font-weight:bold;
+        
+        box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 100px 80px rgba(0, 0, 0, 0.12);
+       opacity:.85;
+    }      
+    #dsetupt{
+        padding:5px;
+        border-radius: 5px;
+        border-style: solid;
+        display:none;
+        position: absolute;;
+        top:10%;
+        left:10%;
+        width: 80%;
+        background-color: yellow;
+    }
+        
+    </style>
+    <div id="todo">
+        <div id="ctrls">
+            <select id="sctrls" oninput="dosctrls(this.value)" style="width: 60%;">\
+                <option>Choose an Option</Option>
+                </option>
+                <option>Show Trucks Dlg</option>
+                <option>Show Job Dlg</option>
+
+                <option>Show Tasks in editor</option>
+                <option>Set Up Task</option>
+                <option>Show Actual Task Obj</option>
+                <option></option>
+                <option>Reinitiate App</option>
+                              <option></option>
+                <option>Send Backup to Web</option>
+                <option>Recover Backup from Web</option>
+                <option></option>
+                <option>Send Editor to Web Literal</option>   
+                <option>Send Editor to Some Where else</option>
+                 <option>Get Obj from Some Where else</option>                            
+            </select>
+            <select id="skey" oninput="selKey(this.value);setTimeout(function(){window.location.reload()},100)">
+            <option>Sel Key</option>
+             <option>Tasks2</option>
+            <option></option>
+            </select>
+        </div>
+        <div id="dadjob">
+            <button onclick="dadjob.style.display='none';ctrls.style.display='block';">Close</button>
+            <button onclick="createJob2(strocas)">Create Job</button>
+        </div>
+        <div id="todoTk">
+            <div id="dintdata">
+                No.
+                <input id="ino" type="number"></input>
+
+                <select id="scid" oninput="" value="A" class="">
+
+                    <option>A</option>
+                    <option>D</option>
+                    <option>T</option>
+                    <option>Tr</option>
+                    <option>Fork</option>
+                    <option>Misc</option>
+
+
+                </select>
+                <select id="stype" oninput="" class="">
+                    <option>Type?</option>
+                    <option>FL</option> 
+                    <option>SL</option>
+                    <option>RL</option>
+                    <option>RO</option>
+                    <option>FB</option>
+
+                </select>
+                <select id="snew" oninput="" value="New" class="">
+
+                    <option>New</option>
+                    <option>Media</option>
+                    <option>Old</option>
+                </select>
+                Off?
+                <select id="sactive" value=1 oninput="" class="">
+
+                    <option>1</option>
+                    <option>0</option>
+
+                </select>
+                <select id="sbrand" oninput="" value="Hiel" class="">
+
+                    <option>Heil</option>
+                    <option>Lebrie</option>
+                    <option>McNillas></option>
+
+                </select>
+
+                <br>
+
+                <input id="ifrecuency" type="number"></input>Frecuency Use 1/10
+                <input id="iarrive" type="number"></input>Arrive Use 1/10
+                <br>...
+                <button onclick="clr()" style="background:orange;">Clr</button>...
+                <button onclick="deletetk()" style="background:orange;">Del</button>...
+                <button onclick="addTk()">Add/Update</button>
+
+
+
+                <button onclick="saveLocal()">Save Local</button>
+                <button onclick="reseteLocal()" style="background:orange;">Reset Local</button>
+                <button onclick="todoTk.style.display='none';ctrls.style.display='block'">Close</button>
+                <div id="dstrocas">
+
+
+                    <select id="strocas" oninput="selTroca(this.value);//selectTk(this)" onfocus="select=this;">
+                        <option>Choose a Truck</option>
+                    </select>
+                    
+                    <button onclick="isearch.value=strocas.value;isearch.value=isearch.value;isearch.oninput();//selForAdd();">Sel</button> 
+                    <select id="sproyectos" oninput="isearch.value=this.value;search(this.value)" style="width: 15%;">
+                        <option>Pr?</option>
+                    
+                    </select>
+                    <textarea id="tasel"></textarea>
+                    <span id="ti" style="display:none;color:red;font-size:8px;padding:2px;margin-left: 30px;border-style: solid;border-color: rgb(9, 84, 204);"></span>
+ 
+                    
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+        <div id="show">
+
+            <textarea id="elocal"></textarea>
+            <button onclick="procesfs()" style="display:none;position:absolute;bottom: 1%;left:1%;background: red;color:white;">Procesar fecgasCard</button>
+             
+             <button onclick="procesTimeCard()" style="position:absolute;bottom: 1%;right:1%;background: red;color:white;">Procesar Time Card</button>
+        </div>
+        </todo>
+        <div id="dcrearj">
+          Job/Search:
+            <input id="isearch" style="background:#ffcccc;width: 40%;" oninput="search(this.value);">
+            <select id="sweek" oninput="selWeek(this.value)" style="width:15%;">
+                <option>W?</option>
+            
+            </select>
+                    </input><br>From:
+            <input id="from" type="number">To:
+            <input id="to" type="number">Date:
+            <input id="fecha" type="date" oninput="alert(this.value)">Description:
+            <button id="mic" onclick="inicRec(jdescription)">&#127908;</button>
+            <textarea id="jdescription" value=""></textarea>
+  <div id="contr">
+      <select id="scont" oninput="selcont(this.value)">
+            <option>Sel Option</option>   
+        <option>Add</option>
+        <option>Update</option>
+        <option>Change Job Name</option>
+        <option>Clr Note</option>
+       <option>Clr All</option>
+       <option>Show String</option>
+        <option>Close</option> 
+        <option></option>
+        <option>Delete J</option>
+          <option></option>
+          <option>Delete W</option>   
+      </select>
+      <button id="mic" onclick="selcont('Add')">Add</button>
+            <div id="djobs"></div>
+        </div>
+
+        </div>
+        <div id="dsetupt">
+            Key:<input id="ina" style="width: 95%;" ><br>
+            Link:<input id="ilin"  style="width: 95%;"><br>
+            <button onclick="setUpTask()">Test it</button><br>
+            <textarea id="ttx" style="width: 98%;height:200px;"></textarea>
+            If Looks good press "Process" <button onclick="processNewTask()">Process</button>
+            <button onclick="repLink()" style="color:white;background:red">Replace Link Only</button>   
+            <button onclick="dsetupt.style.display='none'">Close</button>
+        </div>
+        
+      <textarea id="temp" value=""></textarea>  
+      <script>
+  
+             GetJ=function(url, callback) {
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', url + '/1', true)
+            xhr.onload = function() {
+                var users = JSON.parse(xhr.responseText);
+                if (xhr.readyState == 4 && xhr.status == "200") {
+                    callback(users);
+                } else {
+                    //console.error(users);
+                    return users.error=xhr.readyState
+                }
+            }
+            xhr.send(null);
+        }
+
+         UpdateJ= function(url, ob, callback) {
+            var json = JSON.stringify(ob);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("PUT", url + '/12', true);
+            xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xhr.onload = function() {
+                var users = JSON.parse(xhr.responseText);
+                if (xhr.readyState == 4 && xhr.status == "200") {
+                    if (callback != undefined) callback(users);
+                } else {
+                    (users);
+                }
+            }
+            xhr.send(json);
+        } 
+      
+      </script>
+        <script> 
+        sweek.ar=[];
+       var horasac=0;
+      //  setTimeout(function(){elocal.value="lauro"},10000)
+        fecha.value=new Date().toISOString().substring(0, 10);
+        var link='https://jsonblob.com/api/1172639130273570816';//1172639130273570816;//1155945790782169088';
+        var tasksC={};//tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1155945790782169088",note:""})
+        var tasksCs=localStorage.getItem("tasksCtrl");
+        var ob={};
+        if(tasksCs===null){
+           tasksC={};
+           tasksC.tasks=[]
+          alert("No Tasks jet")
+          localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));
+        }
+        else{
+            tasksC=JSON.parse(tasksCs);
+
+        }
+        if(tasksC.tasks.length===0){ 
+            tasksC.tasks=[]
+            tasksC.tasks.push({key:"Tasks2",link:"https://jsonblob.com/api/1172639130273570816",note:""})}
+        var Key=tasksC.tasks[0].key;skey.value=Key;
+        skey.innerHTML="<option>Sel Key</option>";
+   //     alert(JSON.stringify(tasksC))
+        for(var i=0;i<tasksC.tasks.length;i++){
+            skey.innerHTML+="<option>"+tasksC.tasks[i].key+"</option>"
+        }
+
+        jobs = [];
+                var s = localStorage.getItem(Key);
+                obTasks = {};
+                //  var s = localStorage.getItem(Key);
+               if (s === null) {
+                    obTasks.jobs = [];
+                    obTasks.trocas = [];
+                    obTasks.projects = [];
+                    localStorage.setItem(Key,JSON.stringify(obTasks))
+                } else obTasks = JSON.parse(s);
+                obTasks.key=Key;
+
+
+        var speechRecognizer;
+
+    if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+        speechRecognizer = new webkitSpeechRecognition();
+        speechRecognizer.continuous = false;
+        speechRecognizer.interimResults = true;
+        speechRecognizer.lang = "es-MX | en-US";
+        speechRecognizer.maxAlternatives = 1;
+    } else {
+        alert("your browser does not support speech recognition")
+    }
+
+    var active = false;
+            ActualTrk = {}
+            dcrearj.style.display = "none"
+            todoTk.style.display = "none";
+            dadjob.style.display = 'none';
+            obTasks = {};
+            obTasks.trocas=[]
+            obTasks.projects = [];
+            obTasks.jobs = []
+            var trocas = [], projects=[], troca="", project="", select="",jobs=[];
+            var tsk=localStorage.getItem("lastT");
+ 
+ if(tsk===null) skey.value="Tasks2";
+ else skey.value=tsk;
+selKey(skey.value);
+
+ 
+        //     setUpSels();
+
+            function setUpselT() {
+              }
+
+
+              
+            function validateTk(n) {
+                for (var i = 0; i < trocas.length; i++) {
+                    if (trocas[i].No === n) return i;
+                }
+                return -1
+            }
+
+            function addTk() {
+                if (stype.value.indexOf("?") > 1 || ifrecuency.value.length < 1 || ino.value.length < 1) {
+                    alert("inf. incomplete, check");
+                    return;
+                }
+                var index = validateTk(ino.value)
+                if (index > -1) {
+                    alert("Truck " + ino.value + " Exist");
+                    if (confirm("Do you want to replace it?")) {
+
+
+                        var tk = {};
+                        tk.No = ino.value;
+                        tk.cid = scid.value;
+                        tk.type = stype.value;
+                        tk.nuevo = snew.value;
+                        tk.arrive = iarrive.value;
+                        tk.active = sactive.value;
+                        tk.frecuency = ifrecuency.value;
+                        tk.brand = sbrand.value;
+                        trocas[index] = tk; //  obTasks.trks.push(tk);
+
+                        var s = JSON.stringify(obTasks)
+                        var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
+                        elocal.value = ss;
+                        setUpselT()
+                        if (confirm("Do you want to Save it?")) saveLocal();
+                        alert("Your Truck has been replaced");
+
+                    } else return;
+
+                } else {
+                    var tk = {};
+                    tk.No = ino.value;
+                    tk.cid = scid.value;
+                    tk.type = stype.value;
+                    tk.nuevo = snew.value;
+                    tk.arrive = iarrive.value;
+                    tk.active = sactive.value;
+                    tk.frecuency = ifrecuency.value;
+                    tk.brand = sbrand.value;
+                    trocas.push(tk)
+                    //  obTasks.trks.push(tk);
+
+                    var s = JSON.stringify(obTasks)
+                    var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n")
+                    elocal.value = ss;
+                    setUpselT()
+                    if (confirm("Do you want to Save it?")) saveLocal();
+                }
+                //  clr()
+
+            }
+
+            function saveLocal() {
+
+                var s = JSON.stringify(obTasks)
+                localStorage.setItem(Key, s);
+                var ss = s.replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                elocal.value = s;
+
+
+            }
+
+            function reseteLocal() {
+                if (confirm("Are you sure?, you will loos all local data")) {
+                    if (confirm("Ready to reset local...")) {
+                        localStorage.removeItem(Key);
+                        setTimeout(function(){window.location.reload()},1000)
+                    }
+
+                }
+            }
+
+            function clr() {
+                ino.value = "";
+                scid.value = "A";
+                stype.value = "Type?";
+                snew.value = "New";
+                iarrive.value = "";
+                sactive.value = 1;
+                ifrecuency.value = "";
+                sbrand.value = "Heil";
+                elocal.value = "";
+            }
+
+            function selectTk(e) {
+                if (e.selectedIndex > 0) {
+                    if (e.id = "strocas") {
+                        troca = trocas[e.selectedIndex - 1];
+                        var o = troca;
+
+                        clr();
+
+                        ino.value = o.No;
+                        scid.value = o.cid;
+                        stype.value = o.type;
+                        snew.value = o.nuevo;
+                        iarrive.value = o.arrive;
+                        sactive.value = o.active;
+                        ifrecuency.value = o.frecuency;
+                        sbrand.value = o.brand;
+                        elocal.value = JSON.stringify(o).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+
+                        selForAdd();
+                    }
+
+                } else clr();
+            }
+
+
+            function selectTk2(e) {
+                if (e.selectedIndex > 0) {
+                    var o = e.artk[e.selectedIndex - 1];
+                    e.activetk = o;
+                    e.Index = e.selectedIndex - 1
+                    clr();
+                    ActualTrk = o;
+
+                    ino.value = o.No;
+                    scid.value = o.cid;
+                    stype.value = o.type;
+                    snew.value = o.nuevo;
+                    iarrive.value = o.arrive;
+                    sactive.value = o.active;
+                    ifrecuency.value = o.frecuency;
+                    sbrand.value = o.brand;
+                    elocal.value = JSON.stringify(o).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                    selForAdd()
+                } else clr();
+            }
+
+            function deletetk() {
+                var index = validateTk(ino.value)
+                if (index > -1) {
+                    if (confirm("Are you sure you want to delete this truck (" + ino.value + ")?")) {
+                        trocas.splice(index, 1);
+                        saveLocal();
+                    }
+
+                }
+            }
+
+            function showtrks() {
+                todoTk.appendChild(dstrocas);
+                if (todoTk.style.display === "none") {
+                    todoTk.style.display = "block"
+                    ctrls.style.display = 'none';
+                } else {
+                    todoTk.style.display = "none";
+                    ctrls.style.display = 'block';
+
+                }
+
+            }
+
+            function updateJob() {
+
+
+                //  djobs.active=;
+            }
+
+            function createJob() {
+
+             //   var dj = new Date().toString().split(":");
+             //   dj = dj[0] + ":" + dj[1]
+
+                var job = {};//name
+             //   job.date = fecha.value;
+             //  alert(fecha.value);
+             //   return;
+               // job.created = dj;
+              //  job.from = from.value;
+               // job.to = to.value;
+               // job.description = jdescription.value;
+                var w=prompt("Week? ","Aug 23 to Aug 29 (2023)");
+                if(w===null){alert("Week is required, try to add again.");return;};
+                if(!confirm("Add this week?? "+w+"\n\nOk to continue...")) return;
+                
+               job= {
+                   "name":isearch.value,
+                   "date":fecha.value,
+                   "description":jdescription.value,
+                   "to":to.value,
+                   "from":from.value,
+                   "hours":to.value-from.value,
+                   "week":w
+                }
+
+                var e;
+                if (select.id = "strocas") e = strocas;
+
+                if (select.id === undefined || select.id === "sprojects" || isearch.value != strocas.value) {
+                    if (confirm("Do you want to add a New Project?")) {
+                        if (obTasks.projects === undefined) obTasks.projects = [];
+                        //  if(obTasks.projects)
+                        var op = {};
+                        op.No = isearch.value;
+                        op.jobs = [];
+                        op.jobs.push(job)
+                        projects.push(op)
+                        alert("Adicionar nuevo proyecto\n\n" + JSON.stringify(projects));
+
+                        localStorage.setItem(Key, JSON.stringify(obTasks));
+                        sprojects.onfocus();
+
+                        return;
+                    }
+                    alert("No adicionar");
+                    return
+
+
+                }
+
+
+                var t = e.artk[e.Index]
+                //alert(e.Index)
+                if (t.jobs === undefined) t.jobs = []
+                t.jobs.push(job);
+                var s = JSON.stringify(obTasks)
+                localStorage.setItem(Key, s);
+                elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                // addJob(strocas);
+                fecha.value = "";
+                from.value = "";
+                to.value = "";
+                jdescription.value = "";
+
+                selForAdd();
+            }
+
+            function createJob3() {
+                var e = strocas;
+                if (e.value === undefined) {
+                    alert("Choose a Truck");
+                    return
+                } else;
+                if (djobs.active != undefined) {
+
+                } else {
+
+                }
+                var dj = new Date().toString().split(":");
+                dj = dj[0] + ":" + dj[1]
+
+                var job = {};
+                job.date = fecha.value;
+                job.created = dj;
+                job.form = from.value;
+                job.to = to.value;
+                job.description = jdescription.value;
+                var t = e.artk[e.Index]
+                //alert(e.Index)
+                if (t.jobs === undefined) t.jobs = []
+                t.jobs.push(job);
+                var s = JSON.stringify(obTasks)
+                localStorage.setItem(Key, s);
+                elocal.value = JSON.stringify(t).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "\n").replace(/{/g, "{\n").replace(/}/g, "\n\n"); //.replace(/[/g,"......\n").replace(/]/g,"\n......")
+                // addJob(strocas);
+                fecha.value = "";
+                from.value = "";
+                to.value = "";
+                jdescription.value = "";
+
+                selForAdd();
+            }
+
+            function showJobDlg() {
+                dcrearj.style.display = "block";
+                dcrearj.insertBefore(dstrocas, dcrearj.firstChild);
+             //   isearch.value = strocas.value;
+
+            }
+
+            function selForAdd(e) {
+                //  this.job=""
+
+                djobs.innerHTML = "";
+                isearch.value = strocas.value;
+                var o = troca;
+                if (select.id === "sprojects") {
+                    isearch.value = sprojects.value;
+                    o = project;
+
+                }
+
+        //        alert(o)
+                alert(JSON.stringify(troca))
+                tasel.value = JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
+                if (o.jobs != undefined) {
+                    var js = o.jobs;
+                    //     alert(js.length)
+                    for (var i = 0; i < js.length; i++) {
+                        var u = document.createElement("button");
+                        u.setAttribute("class", "cbj");
+                        u.style.background = "blue";
+                        u.innerHTML = "Update";
+                        u.onclick = function() {
+                            if (confirm("Are you sure you want to Update it?")) {
+                                var ind = this.parentNode.Index;
+                                var o = strocas.activetk; //troca
+                                var job = this.parentNode.job;
+
+
+                                job.date = fecha.value;
+                                var dj = new Date().toString().split(":");
+                                dj = dj[0] + ":" + dj[1]
+
+                                job.created = dj;
+                                job.form = from.value;
+                                job.to = to.value;
+                                job.description = jdescription.value;
+
+                                var s = JSON.stringify(obTasks);
+                           //     alert(s)
+                                //     localStorage.setItem(Key, s);
+
+                                selForAdd();
+
+                            }
+
+                        }
+                        var b = document.createElement("button");
+                        b.setAttribute("class", "cbj")
+                        b.innerHTML = "Delete This";
+                        b.onclick = function() {
+                            if (confirm("Are you sure you want to delete this job?")) {
+                                //    if(select.id="strocas"){
+                                var ind = this.parentNode.Index;
+                                alert(ind);
+                                var o = troca;
+                                o.jobs.splice(ind, 1);
+                                // }
+
+                                //  if(select.id="strocas"){
+
+
+                                // } 
+                                this.parentNode.parentNode.removeChild(this.parentNode);
+                            }
+
+                        }
+                        var p = document.createElement("div");
+                        p.setAttribute("class", "cj")
+                        p.job = js[i];
+                        p.Index = i;
+
+                        var j = js[i];
+                        var jj = JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                        p.innerHTML = jj;
+                        djobs.appendChild(p)
+                        p.onclick = function() {
+                            fecha.value = this.job.date;
+                            from.value = this.job.form;
+                            to.value = this.job.to;
+                            jdescription.value = this.job.description;
+                            djobs.active = this.job;
+                            //     alert(djobs.active)
+
+                        }
+                        p.appendChild(b)
+                        p.appendChild(u)
+
+
+                    }
+
+                }
+
+            }
+
+            function selForAdd2(e) {
+                //  this.job=""
+                djobs.innerHTML = "";
+                isearch.value = strocas.value;
+                var o = troca;
+                tasel.value = JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
+                if (o.jobs != undefined) {
+                    var js = o.jobs;
+                    //     alert(js.length)
+                    for (var i = 0; i < js.length; i++) {
+                        var u = document.createElement("button");
+                        u.setAttribute("class", "cbj");
+                        u.style.background = "blue";
+                        u.innerHTML = "Update";
+                        u.onclick = function() {
+                            if (confirm("Are you sure you want to Update it?")) {
+                                var ind = this.parentNode.Index;
+                                var o = strocas.activetk;
+                                var job = this.parentNode.job;
+                                job.date = fecha.value;
+                                var dj = new Date().toString().split(":");
+                                dj = dj[0] + ":" + dj[1]
+
+                                job.created = dj;
+                                job.form = from.value;
+                                job.to = to.value;
+                                job.description = jdescription.value;
+
+                                var s = JSON.stringify(obTasks)
+                                localStorage.setItem(Key, s);
+
+                                selForAdd();
+
+                            }
+
+                        }
+                        var b = document.createElement("button");
+                        b.setAttribute("class", "cbj")
+                        b.innerHTML = "Delete This";
+                        b.onclick = function() {
+                            if (confirm("Are you sure you want to delete this job?")) {
+                                var ind = this.parentNode.Index;
+                                alert(ind);
+                                var o = troca;
+                                o.jobs.splice(ind, 1);
+
+                                this.parentNode.parentNode.removeChild(this.parentNode);
+
+                            }
+                        }
+                        var p = document.createElement("div");
+                        p.setAttribute("class", "cj")
+                        p.job = js[i];
+                        p.Index = i;
+
+                        var j = js[i];
+                        var jj = JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                        p.innerHTML = jj;
+                        djobs.appendChild(p)
+                        p.onclick = function() {
+                            fecha.value = this.job.date;
+                            from.value = this.job.form;
+                            to.value = this.job.to;
+                            jdescription.value = this.job.description;
+                            djobs.active = this.job;
+                            //     alert(djobs.active)
+
+                        }
+                        p.appendChild(b)
+                        p.appendChild(u)
+
+
+                    }
+
+                }
+
+            }
+
+            function dosctrls(v) {
+                if (v === "Show Trucks Dlg") showtrks();
+                if (v === "Show Job Dlg") showJobDlg(strocas);
+                 if (v === "Send Backup to Web") sendToWeb();
+                 if (v === "Recover Backup from Web") recoverFromWeb();
+                 if (v === "Send Editor to Web Literal") SendEditorWeb(); 
+                  if (v === "Send Editor to Some Where else") SendSWere(); 
+                   if (v === "Get Obj from Some Where else") GetFromSWere(); 
+                              
+                    if (v === "Show Tasks in editor") elocal.value=localStorage.getItem(Key);
+              if (v === "Set Up Task") dsetupt.style.display="block";
+                 if (v === "Show Actual Task Obj"){elocal.value="Tasks Ctrl:\n"+JSON.stringify(tasksC)+"\n\nActual Task Obj.:\n"+JSON.stringify(obTasks)}          
+               
+                if (v === "Reinitiate App"){sctrls.value="Choose an Option";  setTimeout(function(){window.location.reload()},1000);}
+               
+                sctrls.value="Choose an Option";
+
+            }
+
+
+            function crearJob() {
+                if (isearch.value === undefined || isearch.value === "" ) {
+                    alert("No Job Name found or not selected");
+                    return;
+                }
+            //    var dj = new Date().toString().split(":");
+            //    dj = dj[0] + ":" + dj[1]
+                var job = {};
+              //  job.name = isearch.value;
+               // job.date = fecha.value;
+               // job.created = dj;
+             //   job.from = from.value;
+             //   job.to = to.value;
+              //  job.description = jdescription.value;
+
+                var w=prompt("Week? ","Aug 23 to Aug 29 (2023)");
+                if(w===null){alert("Week is required, try to add again.");return;};
+                if(!confirm("Add this week... (example)? "+w+"\n\nOk to continue...")) return;
+                
+               job= {
+                   "name":isearch.value,
+                   "date":fecha.value,
+                   "description":jdescription.value,
+                   "to":to.value,
+                   "from":from.value,
+                   "hours":to.value-from.value,
+                   "week":w
+                }
+
+                verifyJob(job,function(res){
+                        alert(JSON.stringify(res))
+                    })                 
+                if (obTasks.jobs === undefined) obTasks.jobs = []
+                obTasks.jobs.push(job);
+
+                localStorage.setItem(Key, JSON.stringify(obTasks));
+                djobs.appendChild(crearJobE(job));
+                alert("Job "+job.name+" Created...")
+
+
+
+            }
+
+            function crearJobE(job) {
+                var p = document.createElement("div");
+                p.setAttribute("class", "cj")
+                p.job = job;
+                var jj = JSON.stringify(job).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                p.innerHTML = jj;
+                p.onclick = function() {
+                    ti.innerHTML = this.job.name;
+                    ti.ejob = this;
+                    isearch.value = this.job.name;
+                    fecha.value = this.job.date;
+                    from.value = this.job.from;
+                    to.value = this.job.to;
+                    jdescription.value = this.job.description;
+                    djobs.active = this.job;
+                }
+                return p;
+            }
+
+            function setUpSels() {
+        //////////////////////////////
+        trocas = obTasks.trocas;
+              
+              projects = obTasks.projects;
+
+              jobs = obTasks.jobs;
+
+       ///////////////////////////////
+
+                strocas.innerHTML = "<option>Choose a Truck</option>";
+                var o = "";
+                for (var i = 0; i < trocas.length; i++) {
+                    o += "<option >" + trocas[i].No + "</option>";
+                    
+                 //   alert(o)
+                }
+                strocas.innerHTML = strocas.innerHTML + o;
+ 
+
+                djobs.innerHTML = "";
+                sproyectos.innerHTML="<option>Pr?</option>";
+            
+                for (var i = 0; i < jobs.length; i++) {
+                    djobs.appendChild(crearJobE(jobs[i]));
+                    addWeek(jobs[i].week)
+                  if(sproyectos.innerHTML.indexOf(">"+jobs[i].name+"<")===-1)  sproyectos.innerHTML+="<option>"+jobs[i].name+"</option>";
+                
+                  
+                }
+                setUpselT()
+
+            }
+            function validateProj(v) {
+            var i=0;
+                for ( i = 0; i < jobs.length; i++) {
+                 if(v===jobs[i].name) return true;
+                 // i=jobs.length;
+                }
+                alert(i)
+                if(i>=jobs.length) return false
+            }
+
+            function findJob(ar, name) {
+                for (var i = 0; i < ar.length; i++) {
+                    if (ar[i].name === name) return {
+                        object: ar[i],
+                        index: i
+                    };
+                }
+                return {
+                    object: undefined,
+                    index: -1
+                }
+            }
+
+            function indexOfJob(ar, name) {
+                var i = 0;
+                for (i = 0; i < ar.length; i++) {
+                    if (ar[i].name === name) return i;
+                }
+                if (i >= ar.length) return -1
+            }
+
+            function search(v) {
+                horasac=0;
+                v=v.toUpperCase();
+                var ar = djobs.children;
+                  for (var i = 0; i < ar.length; i++) {
+                    var e = ar[i];
+                    var es=e.innerHTML.toUpperCase()
+                    if (es.indexOf(v) > -1){ e.style.display = 'block';horasac+=e.job.hours;}
+                    else e.style.display = "none"
+                    if(v==="") e.style.display = "none" 
+                }
+                tasel.value="Total de Horas en este trabajo: "+horasac;
+  
+            }
+
+            function deletej(e) {
+                if(e===undefined){alert("Job no Exist");return}
+                var j = e.job;
+                if (confirm("Are you sure you want to Delete Job " + j.name + "?")) {
+                    var ind = indexOfJob(jobs, e.job.name);
+                    if (ind > -1) {
+                        if (confirm("Job found, proceed deleting?")) {
+                            jobs.splice(ind, 1);
+
+                            e.parentNode.removeChild(e);
+                            alert("Job Deleted")
+                            saveObj();
+                        }
+                    } else alert("Job not found")
+                }
+
+            }
+
+            function replaceName(e){
+                if(e===undefined){alert("Job no Exist");return}
+                var n=prompt("Actual Job Name: "+e.job.name+"\n\nType new name","new name");
+                if(n==null || n==="new name") {alert("Type a valid name");return}        
+               
+                if(confirm("Job name: "+e.job.name+" will be changed to: "+n+"\n\nDo you want to procced?")){
+                     e.job.name=n;
+                     alert(JSON.stringify(e.job));
+                     e.innerHTML=JSON.stringify(e.job).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                     saveObj(); 
+                }  
+
+    
+            }
+
+            function updatej(e) {
+                if(e===undefined){alert("Job no Exist");return}
+                var j = e.job;
+                if (confirm("Are you sure you want to Update Job " + j.name + "?")) {
+                  //  alert(obTasks.jobs[j])
+                    var ind = indexOfJob(jobs, e.job.name);
+                     if (ind > -1) {
+                         j.date = fecha.value;
+                        j.from = from.value;
+                        j.to = to.value;
+                        j.description = jdescription.value;
+
+                         alert("Job " +j.name+" Updated");
+                            e.innerHTML=JSON.stringify(j).replace(/"/g, "").replace(/{/g, "\n\n").replace(/,/g, "<br> ").replace(/{/g, "{\n").replace(/}/g, "\n\n").replace(/:/g, ": ") + "<br><br>";
+                             verifyJob(j,function(res){
+                        alert(JSON.stringify(res))
+                    })                 
+                       
+                       
+                            saveObj();
+                    } else alert("Job not found")
+                }
+
+            }
+
+            function saveObj() {
+                localStorage.setItem(Key, JSON.stringify(obTasks))
+            }
+            function selTroca(t){
+                isearch.value=strocas.value;
+                isearch.value=isearch.value;
+                isearch.oninput();
+              var o=trocas[strocas.selectedIndex-1];
+                tasel.value= JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
+   
+                
+            }
+            
+          function inicRec(e) {
+        //  alert(e.style.background);alert(e.st);
+       // var a = e.parentNode.getElementsByTagName("textarea")[0];
+       a=e
+        if (!e.st) {
+            mic.style.background = "rgb(250,0,0)";
+            e.st = true;
+            startvoice(e);
+        } else {
+            mic.style.background = "rgb(0,250,0)";
+            e.st = false;
+          //  e.onblur()
+            try {
+                speechRecognizer.stop();
+            } catch (ee) {
+                alert(ee)
+            }
+
+        }
+
+
+
+    }
+     
+            
+             function startvoice(a) {
+        // var a=e.parentNode.getElementsByTagName("textarea")[0];
+        var b = mic;//. a.parentNode.getElementsByTagName("button")[0];
+         
+        try {
+
+            speechRecognizer.start();
+            var ac = "",
+                rep = 0;
+            var finalTranscripts = "";
+            speechRecognizer.onspeechend = function() {
+              //  b.style.background = "#f00";
+                temp.style.display="none";
+                setTimeout(function() {
+                    if (a.st) {
+
+                        if (ac != "") {
+
+                            ac = ac.charAt(0).toUpperCase() + ac.slice(1)
+                            a.value += ac + ". ";
+                            ac = a.value;// alert(ac)
+                            ac = "";
+
+                        }
+                        bexcomando = false;
+                        //     speechRecognizer.start();
+
+                    } else {
+                        speechRecognizer.stop();
+                        b.style.background = "#0f0"
+                    }
+                }, 10)
+            }
+
+            speechRecognizer.onend = function() {
+                b.style.background = "#0f0";
+              temp.style.display="none";
+                setTimeout(function() {
+                    if (a.st) {
+                        rep++;
+
+                        if (rep > 2) {
+                            a.value += "\n\n";
+                            rep = 0;
+                        }
+                        ac = "";
+                        bexcomando = false;
+                        speechRecognizer.start();
+                        b.style.background = "#f00";
+                        temp.style.display="none";
+                   //     a.value+=temp.value;
+
+
+                    } else {
+                        temp.style.display="none";
+                        speechRecognizer.stop();
+                        b.style.background = "#0f0";
+                   //    a.value+=temp.value;
+                    }
+
+                }, 10)
+            };
+
+            speechRecognizer.onresult = function() {
+                comando = event.results[0][0].transcript;
+                temp.style.display="block";
+                //if(comando.indexOf("coma coma")>-1)
+                temp.value=comando;
+                ac = comando; // a.value=comando;//exComando(comando)  if (e.st)
+
+            }
+            speechRecognizer.onerror = function(event) {};
+
+
+        } catch (e) {
+            alert(e)
+        };
+
+    }
+    function sendToWeb(){
+        GetJ(link,function(obc){
+            alert("This is what is in Web ("+link+")...\n\n"+JSON.stringify(obc));
+                alert("This is what is in Local...\n\n"+localStorage.getItem(Key))
+                
+        if(confirm("Are you sure to send object to Web ("+link+")? It will rewrite it, This is what is it in Web:\n\n"+JSON.stringify(obc))){
+            UpdateJ(link,obTasks,function(){alert("All done...");elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);});
+        }
+    })
+    }
+    
+    function recoverFromWeb(){
+              if(confirm("This will load de backup from Web? Confirm next step to rewrite local")){
+            GetJ(link,function(ob){
+                alert("This is what is in Web...\n\n"+JSON.stringify(ob));
+                alert("This is what is in Local...\n\n"+localStorage.getItem(Key))
+                elocal.value="Locl:\n"+localStorage.getItem(Key)+"\n\nWeb:\n"+JSON.stringify(ob);
+                alert("check editor to make sure it will be ok and come back, or proceed in the next step.");
+                if(confirm("Are you sure you want to send it to Local Object?, after that the App will reinitialize")){
+                    localStorage.setItem(Key,JSON.stringify(ob));
+                    setTimeout(function(){window.location.reload()},1000)
+                } 
+            
+            
+            });
+        } 
+        
+    }
+    function selKey(v){
+ 
+        if(elocal.value!=null) {
+            for(var i=0;i<tasksC.tasks.length;i++){
+                if(tasksC.tasks[i].key===v){
+                    link=tasksC.tasks[i].link;Key=v;
+                    alert("Task "+Key+" Selected\n\n");//+JSON.stringify(tasksC.tasks[i]));
+                    localStorage.setItem("lastT",Key);
+                  //  alert(localStorage.getItem("lastT"))
+                    ina.value=v;
+                    ilin.value=link;
+                    obTasks=JSON.parse(localStorage.getItem(v));
+                 //   delete obTasks.jobs
+                 //   obTasks.jobs=[];
+                    elocal.value=JSON.stringify(obTasks);
+                    i=tasksC.tasks.length
+                 //   setTimeout(function(){window.location.reload()},1000)
+
+                    setUpSels();
+                    }
+            }
+        }
+        
+        
+    }
+ function selcont(v){
+    if(v==="Add")crearJob();
+    if(v==="Update")updatej(ti.ejob);
+       if(v==="Change Job Name")replaceName(ti.ejob);
+    if(v==="Show String"){dcrearj.style.display="none";elocal.style.display="block";elocal.value=repObj(jobs);}
+    if(v==="Delete J")deletej(ti.ejob);
+    if(v==="Delete W")deleteW();
+    if(v==="Clr Note")jdescription.value="";
+    if(v==="Clr All"){jdescription.value="";isearch.value="";from.value=0;to.value=0;}
+      if(v==="Close")dcrearj.style.display='none';  
+  scont.value="Sel Option"
+
+
+
+ }
+ function repObj(ob){
+  var s=JSON.stringify(ob).replace(/"/g," ").replace(/:/g,": ").replace(/,/g,"\n").replace(/{/g,"\n").replace(/}/g,"\n");
+     return s;
+ }       
+   function setUpTask(){
+  try{
+    GetJ(ilin.value,function(ob){
+     
+     ttx.value="Local:\n"+localStorage.getItem(ina.value)+"\n\nWeb: \n"+JSON.stringify(ob);
+
+     var ns=JSON.stringify(tasksC);
+  if(ns.indexOf('"key":"'+ina.value+'"')>-1) alert("Already exist, If you choose Process it will overwrite it")
+
+})}
+catch(e){elocal.value=e}
+
+   }     
+   function repLink(){
+       if(confirm("It will replace link of local Task Object, do you wanto to proceed?")){
+       for(var i=0;i<tasksC.tasks.length;i++){
+           var t=tasksC.tasks[i];
+           if(t.key===ina.value) t.link=ilin.value;
+       }
+       if(obTasks.key!=undefined)obTasks.key=ina.value;
+       localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));
+       localStorage.setItem(ina.value,JSON.stringify(obTasks))
+    }
+   }
+   function processNewTask(){
+       link=ilin.value;
+       Key=ina.value;
+       var f=false,t=undefined;
+       for(var i=0;i<tasksC.tasks.length;i++){
+          t=tasksC.tasks[i];
+           if(t.key===Key){
+                f=true;
+                alert("Key already exist, If you choose Process it will overwrite it")
+            if(!confirm("This option will Rewrite localy object that belogning to "+Key+" key\n\n Do you want to proceed?\n\nOtherwise press cancel, if you want to replace only the link go and press 'Replace Link Only'")) return
+               i=tasksC.tasks.length;
+       }
+    }
+  var ns=JSON.stringify(tasksC);
+ 
+ //alert(ns)
+ 
+   var nt={};
+ 
+   nt.key=Key;
+   nt.link=link;
+    if(!f){ tasksC.tasks.push(nt); localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));}
+
+   obTasks={};
+   obTasks.key=Key;
+   obTasks.jobs = [];
+    obTasks.trocas = [];
+   obTasks.projects = [];
+   if(!confirm("This will be saved locally, press OK to continue\n\n"+JSON.stringify(obTasks))) return;
+    localStorage.setItem(Key,JSON.stringify(obTasks))
+   alert("The local has been setup and link\n\nThe app will restart"+JSON.stringify(tasksC));
+//   alert(localStorage.getItem(Key));// localStorage.setItem(Key,"")
+setTimeout(function(){window.location.reload()},1000)
+ 
+
+   }   
+   function validateObj(variable,object){
+
+   }
+   function procesTimeCard(){
+       var a=elocal.value,week="";
+       
+       if(a[0]!="{"){
+           var jobs=[];
+           var ch=String.fromCharCode(9);
+           var w=a.split("Date")
+          
+          var d=w[1].split("Total Daily:");
+           var ww=w[0].split("\n");
+          for(var ii=0;ii<ww.length;ii++){
+          if(ww[ii].toUpperCase().indexOf("MECHANIC NAME")>-1){
+              week=ww[ii].split(ch)[5];
+             }
+        }
+
+         for(var i=0;i<d.length;i++){jobs.push(
+              processday(d[i],week)) 
+            };
+
+         elocal.value=JSON.stringify(obTasks);
+         if(confirm("Do you want to Save changes to ObTasks.jobs?...")){
+saveObj();
+//setUpSels();
+setTimeout(function(){window.location.reload()},1000);
+
+         } 
+       }
+       else alert("Not time card")
+       
+   }
+   function formatFe(f){
+       try{
+           if(f!=undefined&& f.length>3){
+    var pd=f.split("/");
+    if(pd.length===3){
+         if(pd[0].length===1)pd[0]="0"+pd[0];
+        if(pd[1].length===1)pd[1]="0"+pd[1];
+        da="20"+pd[2]+"-"+pd[0]+"-"+pd[1];
+        return da;
+    }
+}
+
+ 
+    return f;
+       // js[i].date=da;
+        }
+        catch(e){alert(e)}
+   }
+  function processday(day,week){
+
+         var fe="",arjo=[];
+      var ch=String.fromCharCode(9);
+      var lns=day.split("\n");//alert(lns)
+       for(var i=0;i<lns.length;i++){
+           if(lns[i].indexOf(ch+"OUT"+ch)>-1){
+        //   alert("linea "+i+"   "+lns[i])
+         var job={}, jo={};
+         var c=lns[i].split(ch);
+         jo.name=c[0];
+         if(jo.name===undefined || jo.name===" " ||jo.name.length<2){
+             jo.name=c[1].split(" ")[0];
+         }
+         jo.date=formatFe(c[8]);
+         if(jo.date!=undefined && jo.date.indexOf("2")>-1) fe=jo.date;
+         else jo.date=fe;
+        // alert(jo.date);
+         jo.description=c[1];
+         jo.to=c[7]*1;
+         if(lns[i+1]===undefined);//alert(i);
+         else{
+         cd=lns[i+1].split(ch);
+         jo.from=cd[7]*1;
+         }
+i++;
+        if(isNaN(jo.to) || jo.to===0 || jo.from===0 || isNaN(jo.from)) jo={};
+        else{
+            if(jo.name===undefined  || jo.name===" " || jo.name==="") jo.name=jo.description.split(" ")[0].replace(/,/g,"");
+            if(jo.date!=undefined && jo.date)
+            jo.hours=jo.to-jo.from;
+            jo.week=week;
+             arjo.push(jo);
+             if(obTasks.jobs===undefined) obTasks.jobs=[jo];
+            verifyJob(jo,function(res){
+
+
+             if(res.result==='missing') obTasks.jobs.push(jo);
+             else {
+                 var obs=JSON.stringify(res).replace(/"jobIn":/g,"\n\njobIn").replace(/"jobComing":/g,"\n\njobComing");
+               //  alert(obs); 
+                 if(confirm("tThe job already exist or time is overlaping, check if it is right press ok\n\n"+obs)){
+                     
+                      if(confirm("Replace it anyway?...\n\n"+obs)){ obTasks.jobs[res.index]=jo;     }
+               
+                
+                
+                };
+
+             //   if(confirm(jo.name+" Already Exist, Do you want to replace it?")){ obTasks.jobs[ind]};
+
+             }
+  })
+        }
+            }
+    }
+    
+    return arjo;
+
+  }
+  function verifyJob(job,callback){
+      var a=obTasks.jobs;
+      var i=0;
+      if(callback!=undefined){
+        //  alert(callback)
+      for(i=0;i<a.length;i++){
+          var j=a[i];
+          if(j.week===job.week && j.date===job.date){
+
+              var t0=job.to, f0=job.from,t1=j.to, f1=j.from;
+
+ 
+              if(f1>f0 && f1<t0 || f0>f1 && f0<t1){ callback({result:"overlaping",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});return;}
+              else{
+                if(f1===f0 && t1===t0){ callback({result:"found",index:i,jobIn:j,jobComing:job,difto:t1-t0,diffrom:f1-f0});return;}
+              }
+          } ;
+       }
+      if(i==a.length) callback({result:"missing",index:-1,jobIn:{},jobComing:job});
+    }
+  }
+ 
+  function procesfs(){
+   var js=obTasks.jobs;
+    var da="";
+    for(var i=0;i<js.length;i++){
+        var pd=js[i].date.split("/");
+         if(pd[0].length===1)pd[0]="0"+pd[0];
+        if(pd[1].length===1)pd[1]="0"+pd[1];
+        da="20"+pd[2]+"-"+pd[0]+"-"+pd[1];
+
+        js[i].date=da;
+     }
+ 
+     elocal.value=JSON.stringify(obTasks);
+
+     localStorage.setItem(Key,JSON.stringify(obTasks));
+     setTimeout(function(){window.location.reload()},1000)
+
+  }
+  function selWeek(v){
+   //   alert(v);
+      isearch.value=v
+      search(v);
+     // search(v);
+
+
+  }
+  function addWeek(w){
+      var ws=sweek.ar;
+
+          if(ws.indexOf(w)===-1){
+              ws.push(w);
+              sweek.innerHTML+="<option>"+w+"</option>"
+
+
+          }
+ }
+ function deleteW(){
+     var w=sweek.value;
+     if(w==="W?") {alert("Choos a Week");retunr; }
+     else{
+         if(confirm("Are you sure you want to delete the whole week?"+"\n\n"+w)){
+         var js=obTasks.jobs;
+         alert(js.length)
+         for(var i=0;i<js.length;i++){
+             if(js[i].week===w){ js.splice(i,1);i--;}
+         }
+         if(confirm("All done, do you want to Save Changes to local Object?")){
+          
+              saveObj(); 
+               alert(obTasks.jobs.length);
+              setTimeout(function(){window.location.reload()},1000)
+        }
+     }
+
+ }
+}
+
+function SendEditorWeb(){
+
+    if(confirm("Are you sure you want to send it to Web ("+link+")?\n\n**Make sure is an Json Object")){
+GetJ(link,function(obc){
+     if(confirm("This is what is in Web, Press OK to Procceed.\n\n"+JSON.stringify(obc)))
+        UpdateJ(link,JSON.parse(elocal.value),function(){
+            alert("All done...\n\n**To load it to the app you have to choose 'Recover Backup from Web' option from menu.");
+            
+        });
+
+})
+    }
+}
+function SendSWere(){
+    var linkk=prompt("Type destination Link","");
+    if(linkk!=null && linkk.indexOf("https")>-1){
+    GetJ(linkk,function(obc){
+     if(confirm("This is what is in Web, Press OK to Procceed.\n\n"+JSON.stringify(obc)))
+        UpdateJ(linkk,JSON.parse(elocal.value),function(){
+            alert("All done...");
+            
+        });
+
+})
+    }
+
+}
+function GetFromSWere(){
+    var linkk=prompt("Type source Link","");
+    if(linkk!=null && linkk.indexOf("https")>-1){
+    GetJ(linkk,function(obc){
+     if(confirm("This is what is in Web, Press OK to Procceed.(The result willbe copied to Editor.\n\n"+JSON.stringify(obc)))
+     elocal.value=JSON.stringify(obc);
+ })
+    }
+
+}
+
+        </script>
+
+</head>
+
+</html>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/9785/9785466.png">
     <title>Task Notes</title>
     <meta charset="utf-8">
