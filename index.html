@@ -273,7 +273,7 @@
         <option>Close</option> 
         <option></option>
         <option>Delete J</option>
-          <option></option>
+          
           <option>Delete W</option>   
       </select>
       <button id="mic" onclick="selcont('Add')">Add</button>
@@ -284,7 +284,8 @@
         <div id="dsetupt">
             Key:<input id="ina" style="width: 95%;" ><br>
             Link:<input id="ilin"  style="width: 95%;"><br>
-            <button onclick="setUpTask()">Test it</button><br>
+            <button onclick="setUpTask()">Test it</button>
+            <button onclick="delTask()" style="color:white;background:red">DELETE THIS TASK</button>   <br>
             <textarea id="ttx" style="width: 98%;height:200px;"></textarea>
             If Looks good press "Process" <button onclick="processNewTask()">Process</button>
             <button onclick="repLink()" style="color:white;background:red">Replace Link Only</button>   
@@ -360,6 +361,7 @@
                 var s = localStorage.getItem(Key);
                 obTasks = {};
                 //  var s = localStorage.getItem(Key);
+        //        alert(s)
                if (s === null) {
                     obTasks.jobs = [];
                     obTasks.trocas = [];
@@ -367,6 +369,7 @@
                     localStorage.setItem(Key,JSON.stringify(obTasks))
                 } else obTasks = JSON.parse(s);
                 obTasks.key=Key;
+             //   alert(JSON.stringify(obTasks))
 
 
         var speechRecognizer;
@@ -790,7 +793,6 @@ selKey(skey.value);
                 tasel.value = JSON.stringify(o).split('jobs":')[0].replace(/}/g, "").replace(/{/g, "").replace(/,/g, "\n").replace(/"/g, " ")
                 if (o.jobs != undefined) {
                     var js = o.jobs;
-                    //     alert(js.length)
                     for (var i = 0; i < js.length; i++) {
                         var u = document.createElement("button");
                         u.setAttribute("class", "cbj");
@@ -804,7 +806,6 @@ selKey(skey.value);
                                 job.date = fecha.value;
                                 var dj = new Date().toString().split(":");
                                 dj = dj[0] + ":" + dj[1]
-
                                 job.created = dj;
                                 job.form = from.value;
                                 job.to = to.value;
@@ -1236,12 +1237,13 @@ selKey(skey.value);
                     ina.value=v;
                     ilin.value=link;
                     obTasks=JSON.parse(localStorage.getItem(v));
-                 //   delete obTasks.jobs
-                 //   obTasks.jobs=[];
+ 
                     elocal.value=JSON.stringify(obTasks);
+                    if(elocal.value===null || elocal.value==="null") alert("Null key")
+                   // 
                     i=tasksC.tasks.length
                  //   setTimeout(function(){window.location.reload()},1000)
-
+//alert(elocal.value)
                     setUpSels();
                     }
             }
@@ -1293,7 +1295,9 @@ catch(e){elocal.value=e}
     }
    }
    function processNewTask(){
+
        link=ilin.value;
+       if(link===null || link===" " || link===undefined) {link="";alert("No link found, you can add a link later.")}
        Key=ina.value;
        var f=false,t=undefined;
        for(var i=0;i<tasksC.tasks.length;i++){
@@ -1306,15 +1310,11 @@ catch(e){elocal.value=e}
        }
     }
   var ns=JSON.stringify(tasksC);
- 
- //alert(ns)
- 
-   var nt={};
- 
+    var nt={};
    nt.key=Key;
-   nt.link=link;
+   if(ilin.value==="") nt.link="";
+   else nt.link=link;
     if(!f){ tasksC.tasks.push(nt); localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));}
-
    obTasks={};
    obTasks.key=Key;
    obTasks.jobs = [];
@@ -1555,6 +1555,40 @@ function GetFromSWere(){
  })
     }
 
+}
+function delTask(){
+    if(confirm("Are you sure you want to delete this Task?("+Key+")")){
+       //alert( tasksCs)
+       var ts=tasksC.tasks;
+       for(var i=0;i<ts.length;i++){
+           var t=ts[i];
+           if(t.key===Key){
+               alert("found");
+             //  alert(ts.length)
+              // ts.splice(i,1);
+              // alert(ts.length);
+               var ll=localStorage.getItem(Key);
+         //      alert(ll)
+           //    alert('localStorage.removeItem(Key);')
+              if(confirm("It is ready to delete "+Key+" localy, To delete from web you have to do it manually from this site:\n"+link+"\n\nReady to proceed deleting "+Key+"?")){
+                tasksC.tasks.splice(i,1);
+ //               localStorage.setItem("lastT","Task2");
+                localStorage.setItem("lastT","Task2");
+             //   alert(JSON.stringify(tasksC));
+            //    localStorage.setItem("")
+                   localStorage.removeItem(Key);
+                   localStorage.setItem("tasksCtrl",JSON.stringify(tasksC));
+                   saveObj();
+                   alert("All done... app will restart");
+                   setTimeout(function(){window.location.reload()},100);
+                   return;
+              }
+           }
+
+       }
+
+
+}
 }
 
         </script>
