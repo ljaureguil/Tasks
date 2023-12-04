@@ -1619,6 +1619,47 @@ function formatArToJ(ar,callback){
   //  
     
 }
+
+          function selKey2(v){
+ 
+        if(elocal.value!=null) {
+            for(var i=0;i<tasksC.tasks.length;i++){
+                if(tasksC.tasks[i].key===v){
+                    link=tasksC.tasks[i].link;Key=v;
+                    alert("Task "+Key+" Selected\n\n");//+JSON.stringify(tasksC.tasks[i]));
+                    localStorage.setItem("lastT",Key);
+                  //  alert(localStorage.getItem("lastT"))
+                    ina.value=v;
+                    ilin.value=link;
+                    obTasks=JSON.parse(localStorage.getItem(v)); 
+  //                 if(obTasks.Jobs===undefined){
+                   //  alert(obTasks.arjobs+"....................");
+                        formatJToAr(obTasks.jobs,function(ar){
+                             elocal.value=ar;
+                              obTasks.jobs=ar;
+                  elocal.value=JSON.stringify(obTasks);})
+    /*                    ////////
+                formatArToJ(obTasks.Jobs,function(oj){obTasks.jobs=oj;elocal.value=JSON.stringify(obTasks)})
+                    if(elocal.value===null || elocal.value==="null") alert("Null key")
+                      i=tasksC.tasks.length
+                     setUpSels();
+
+                        })
+
+                    }
+                    else{
+ */
+                    elocal.value=JSON.stringify(obTasks);
+                    if(elocal.value===null || elocal.value==="null") alert("Null key")
+                      i=tasksC.tasks.length
+                     setUpSels();
+ //               }
+                    }
+            }
+        }
+        
+        
+    }   
         </script>
 
 </head>
