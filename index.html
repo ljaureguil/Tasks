@@ -1591,6 +1591,34 @@ function delTask(){
 }
 }
 
+function formatJToAr(ob,callback){
+    var js=ob, ar=[];
+    for(var i=0;i<js.length;i++){
+        var j=js[i]
+        var a=[j.name,j.date,j.description,j.from,j.to,j.hours,j.week];
+        ar.push(a)
+
+    }
+  //  ob.arjobs=ar;
+    if(callback!=undefined){callback(ar)}
+    else elocal.value=JSON.stringify(ob);
+  //  
+    
+}
+
+function formatArToJ(ar,callback){
+    var jbs=[];
+  
+    for(var i=0;i<ar.length;i++){
+        var a=ar[i];
+           var j={};j.name=a[0];j.date=a[1];j.description=a[2];j.from=a[3]*1;j.to=[4]*1;j.hours=j.to-j.from;j.week=a[6];
+        jbs.push(j);
+    }
+     if(callback!=undefined){callback(jbs)}
+    else elocal.value=JSON.stringify(jbs);
+  //  
+    
+}
         </script>
 
 </head>
